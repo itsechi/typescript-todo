@@ -1,5 +1,6 @@
 import Link from '@/components/Link';
 import Logo from '@/assets/logo.svg';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 
 const Navbar = () => {
   return (
@@ -9,7 +10,8 @@ const Navbar = () => {
           <img src={Logo} alt="logo" width={25} height={25} />
           <p className=" text-lg font-bold text-primary">todolist</p>
         </div>
-        <nav>
+        <nav className="flex gap-2 items-center">
+          <ThemeSwitcher />
           <Link href="/" text="Log In" />
         </nav>
       </div>
