@@ -8,9 +8,14 @@ export default {
     extend: {
       colors: {
         "primary": colors.indigo[600],
-        "light": colors.gray[100],
+        "night-primary": colors.indigo[400],
+        "night-bg": colors.gray[600],
+        "black": colors.gray[900],
+        "gray-dark": colors.gray[700],
         "gray-medium": colors.gray[500],
-        "gray-dark": colors.gray[800],
+        "gray-light": colors.gray[300],
+        "hover-light": colors.gray[100],
+        "night-hover-light": colors.gray[800],
       },
     },
   },
