@@ -1,8 +1,8 @@
 import Link from '@/components/Link';
-import Logo from '@/assets/logo.svg';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { useState } from 'react';
 import {
+  CheckBadgeIcon,
   ArrowRightStartOnRectangleIcon as LogOutIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
@@ -15,8 +15,8 @@ const Navbar = () => {
   return (
     <header className="w-full border-b  p-4 text-primary dark:bg-black dark:text-night-primary">
       <div className="mx-auto flex max-w-screen-2xl justify-between">
-        <div className="flex items-center gap-3">
-          <img src={Logo} alt="logo" width={25} height={25} />
+        <div className="flex items-center gap-1">
+          <CheckBadgeIcon className="h-6 w-6" />
           <p className=" text-lg font-bold">todolist</p>
         </div>
         <nav className="flex items-center gap-2">

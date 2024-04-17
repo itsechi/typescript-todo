@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 export default function useShowDropdown() {
   const [showDropdown, setShowDropdown] = useState(false);
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
