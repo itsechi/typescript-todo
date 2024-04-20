@@ -13,19 +13,19 @@ const Navbar = () => {
   const { ref, showDropdown, setShowDropdown } = useShowDropdown();
 
   return (
-    <header className="w-full border-b  p-4 text-primary dark:bg-black dark:text-night-primary">
+    <header className="dark:border-night-border dark:bg-night-nav h-[60px] w-full  border-b p-4">
       <div className="mx-auto flex max-w-screen-2xl justify-between">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 text-primary dark:text-night-primary">
           <CheckBadgeIcon className="h-6 w-6" />
-          <p className=" text-lg font-bold">todolist</p>
+          <p className="text-lg font-bold">todolist</p>
         </div>
-        <nav className="flex items-center gap-2">
+        <nav className="flex items-center gap-2 dark:text-white">
           <ThemeSwitcher />
           {user ? (
             <div ref={ref} className="relative">
               {' '}
               <button
-                className="font-semibold text-primary underline underline-offset-2 dark:text-night-primary"
+                className="font-semibold underline underline-offset-2 "
                 onClick={() => setShowDropdown(!showDropdown)}
               >
                 Hello, User
@@ -47,9 +47,9 @@ const Dropdown = () => {
   };
 
   const DropdownItem = ({ children }: Props) => (
-    <li className="first:border-b hover:bg-hover-light dark:border-gray-dark dark:hover:bg-night-hover-light ">
+    <li className="hover:bg-hover dark:border-night-border dark:hover:bg-night-hover first:border-b">
       <a
-        className="flex gap-2 px-3 py-3 font-semibold text-gray-dark dark:text-gray-light"
+        className="dark:text-night-gray-text flex gap-2 px-3 py-3 font-semibold"
         href="/"
       >
         {children}
@@ -58,7 +58,7 @@ const Dropdown = () => {
   );
 
   return (
-    <div className="top-100 absolute right-0 min-w-[150px] rounded-md border border-gray-light bg-white shadow-sm dark:border-gray-dark dark:bg-black">
+    <div className="top-100 dark:border-night-border dark:bg-night-nav absolute right-0 min-w-[150px] rounded-md border bg-white shadow-sm">
       <ul>
         <DropdownItem>
           <UserIcon className="h-6 w-6" />
