@@ -25,6 +25,9 @@ export default {
         // common
         "black": '#121316',
       },
+      gridTemplateColumns: {
+        'responsive': 'repeat(auto-fit, minmax(100px, 300px))'
+      }
     },
   },
   plugins: [],
