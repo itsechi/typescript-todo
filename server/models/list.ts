@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
 
 const ListSchema = new Schema({
-    listName: {
-        type: String,
-    },
-})
+  listTitle: {
+    type: String,
+  },
+});
 
-export default model('List', ListSchema)
+export default model('List', ListSchema);

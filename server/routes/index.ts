@@ -1,7 +1,8 @@
-import express from 'express'
+import express from 'express';
 const router = express.Router();
-import { getLists } from '../controllers/listController';
+import { getLists, newList } from '../controllers/listController';
 
 router.get('/', getLists);
+router.post('/', newList);
 
 export default router;
