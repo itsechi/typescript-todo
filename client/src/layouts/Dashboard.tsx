@@ -1,7 +1,7 @@
-import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import { UserLists } from '@/components/UserLists';
+import { createList, getLists } from '@/api/lists';
 import { List } from '@/types';
 
 const Dashboard = () => {
@@ -10,31 +10,22 @@ const Dashboard = () => {
   const [lists, setLists] = useState<List[]>([]);
 
   useEffect(() => {
-    axios
-      .get(import.meta.env.VITE_API_URL)
-      .then(res => {
-        setLists(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const handleFetchData = async () => {
+      const response = (await getLists()) || [];
+      setLists(response);
+    };
+    handleFetchData();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setListTitle(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    axios
-      .post(import.meta.env.VITE_API_URL, { listTitle })
-      .then(res => {
-        setLists(prevLists => [...prevLists, res.data.newList]);
-        setListTitle('');
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const response = await createList(listTitle);
+    setLists((prevLists) => [...prevLists, response]);
+    setListTitle('');
   };
 
   return (

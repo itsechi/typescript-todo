@@ -1,15 +1,18 @@
-import Link from '@/components/Link';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
-import { useState } from 'react';
 import {
   CheckBadgeIcon,
   ArrowRightStartOnRectangleIcon as LogOutIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
+import Link from '@/components/Link';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
 import useShowDropdown from '@/utils/useShowDropdown';
+import { User } from '@/types';
 
-const Navbar = () => {
-  const [user, setUser] = useState(true);
+type Props = {
+  user: User;
+};
+
+const Navbar = ({ user }: Props) => {
   const { ref, showDropdown, setShowDropdown } = useShowDropdown();
 
   return (
@@ -28,12 +31,14 @@ const Navbar = () => {
                 className="font-semibold underline underline-offset-2 "
                 onClick={() => setShowDropdown(!showDropdown)}
               >
-                Hello, User
+                Hello, {user.displayName}
               </button>
               {showDropdown && <Dropdown />}
             </div>
           ) : (
-            <Link href="/">Log In</Link>
+            <Link href={`${import.meta.env.VITE_API_URL}auth/google`}>
+              Log In
+            </Link>
           )}
         </nav>
       </div>
@@ -44,13 +49,14 @@ const Navbar = () => {
 const Dropdown = () => {
   type Props = {
     children: React.ReactNode;
+    href: string;
   };
 
-  const DropdownItem = ({ children }: Props) => (
+  const DropdownItem = ({ children, href }: Props) => (
     <li className="hover:bg-hover dark:border-night-border dark:hover:bg-night-hover first:border-b">
       <a
         className="dark:text-night-gray-text flex gap-2 px-3 py-3 font-semibold"
-        href="/"
+        href={href}
       >
         {children}
       </a>
@@ -60,12 +66,12 @@ const Dropdown = () => {
   return (
     <div className="top-100 dark:border-night-border dark:bg-night-nav absolute right-0 min-w-[150px] rounded-md border bg-white shadow-sm">
       <ul>
-        <DropdownItem>
+        <DropdownItem href="/">
           <UserIcon className="h-6 w-6" />
           Edit profile
         </DropdownItem>
 
-        <DropdownItem>
+        <DropdownItem href={`${import.meta.env.VITE_API_URL}loggedOut`}>
           <LogOutIcon className="h-6 w-6" />
           Log out
         </DropdownItem>
