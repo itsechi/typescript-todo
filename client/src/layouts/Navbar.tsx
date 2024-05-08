@@ -37,7 +37,7 @@ const Navbar = ({ user }: Props) => {
             </div>
           ) : (
             <Link href={`${import.meta.env.VITE_API_URL}auth/google`}>
-              Log In
+              <span className="text-black dark-text-white">Log In</span>
             </Link>
           )}
         </nav>

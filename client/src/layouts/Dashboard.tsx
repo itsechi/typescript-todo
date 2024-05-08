@@ -3,6 +3,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { UserLists } from '@/components/UserLists';
 import { createList, getLists } from '@/api/lists';
 import { List, User } from '@/types';
+import { useLocalStorage } from '@/utils/useLocalStorage';
 
 type Props = {
   user: User;
@@ -14,7 +15,7 @@ const Dashboard = ({ user }: Props) => {
     listTitle: '',
     userId: '',
   });
-  const [lists, setLists] = useState<List[]>([]);
+  const [lists, setLists] = useLocalStorage<List[]>('LISTS', []);
 
   useEffect(() => {
     const handleFetchData = async () => {
@@ -27,18 +28,26 @@ const Dashboard = ({ user }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setList({
       listTitle: e.target.value,
-      userId: user!._id,
+      userId: user ? user!._id : '',
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await createList(list);
-    setLists((prevLists) => [...prevLists, response]);
-    setList({
-      listTitle: '',
-      userId: '',
-    });
+    if (user) {
+      const response = await createList(list);
+      setLists((prevLists) => [...prevLists, response]);
+      setList({
+        listTitle: '',
+        userId: '',
+      });
+    } else {
+      setLists((prevLists) => [...prevLists, list]);
+      setList({
+        listTitle: '',
+        userId: '',
+      });
+    }
   };
 
   return (
