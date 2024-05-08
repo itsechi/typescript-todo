@@ -21,16 +21,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: process.env.SECRET!,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
   }),
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('session'));
 
 connectDB();
-app.use(router);
 app.use(authRouter);
+app.use(router);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

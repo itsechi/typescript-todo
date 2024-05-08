@@ -10,18 +10,18 @@ authRouter.get(
 
 authRouter.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: process.env.CLIENT_URL }),
-  (req: Request, res: Response) => {
-    // Successful authentication, redirect home
-    res.redirect(process.env.CLIENT_URL!);
-  },
+  passport.authenticate('google', {
+    successRedirect: process.env.CLIENT_URL,
+    failureRedirect: process.env.CLIENT_URL,
+    session: true,
+  }),
 );
 
 authRouter.get(
   '/auth/google/callback/success',
   (req: Request, res: Response) => {
     if (req.user) {
-      res.send(req.user);
+      res.json(req.user);
     }
   },
 );

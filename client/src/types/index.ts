@@ -1,9 +1,10 @@
 export type List = {
-  id: string;
   listTitle: string;
+  userId: string;
 };
 
 export type User = {
-  id: string;
+  _id: string;
+  googleId: string;
   displayName: string;
 } | null;

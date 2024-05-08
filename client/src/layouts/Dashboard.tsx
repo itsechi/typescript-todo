@@ -2,11 +2,18 @@ import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { UserLists } from '@/components/UserLists';
 import { createList, getLists } from '@/api/lists';
-import { List } from '@/types';
+import { List, User } from '@/types';
 
-const Dashboard = () => {
+type Props = {
+  user: User;
+};
+
+const Dashboard = ({ user }: Props) => {
   const [showInput, setShowInput] = useState(false);
-  const [listTitle, setListTitle] = useState('');
+  const [list, setList] = useState<List>({
+    listTitle: '',
+    userId: '',
+  });
   const [lists, setLists] = useState<List[]>([]);
 
   useEffect(() => {
@@ -18,14 +25,20 @@ const Dashboard = () => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setListTitle(e.target.value);
+    setList({
+      listTitle: e.target.value,
+      userId: user!._id,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await createList(listTitle);
+    const response = await createList(list);
     setLists((prevLists) => [...prevLists, response]);
-    setListTitle('');
+    setList({
+      listTitle: '',
+      userId: '',
+    });
   };
 
   return (
@@ -43,7 +56,7 @@ const Dashboard = () => {
                 className="bg-hover focus:outline-primary dark:border-night-border dark:bg-night-hover dark:focus:outline-primary rounded-lg border px-2 py-1.5 text-sm dark:focus:outline-none"
                 type="text"
                 placeholder="Enter the list name"
-                value={listTitle}
+                value={list.listTitle}
                 onChange={handleChange}
               />
               <div className="flex gap-2 text-sm">

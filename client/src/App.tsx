@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <Navbar user={user} />
-      <Dashboard />
+      <Dashboard user={user} />
     </>
   );
 }
