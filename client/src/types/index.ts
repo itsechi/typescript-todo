@@ -1,4 +1,5 @@
 export type List = {
+  _id?: string;
   listTitle: string;
   userId: string;
 };

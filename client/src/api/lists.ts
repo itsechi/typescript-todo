@@ -27,3 +27,19 @@ export const createList = async (list: List) => {
     console.error(err);
   }
 };
+
+export const deleteList = async (id?: string) => {
+  try {
+    const res = await fetch(import.meta.env.VITE_API_URL, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+    const json = await res.json();
+    return json;
+  } catch (err) {
+    console.error(err);
+  }
+};

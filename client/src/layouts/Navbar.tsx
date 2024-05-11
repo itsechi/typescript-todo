@@ -37,7 +37,7 @@ const Navbar = ({ user }: Props) => {
             </div>
           ) : (
             <Link href={`${import.meta.env.VITE_API_URL}auth/google`}>
-              <span className="text-black dark-text-white">Log In</span>
+              <span className="text-black dark:text-white">Log In</span>
             </Link>
           )}
         </nav>
@@ -71,10 +71,12 @@ const Dropdown = () => {
           Edit profile
         </DropdownItem>
 
-        <DropdownItem href={`${import.meta.env.VITE_API_URL}loggedOut`}>
-          <LogOutIcon className="h-6 w-6" />
-          Log out
-        </DropdownItem>
+        <div onClick={() => localStorage.removeItem('LISTS')}>
+          <DropdownItem href={`${import.meta.env.VITE_API_URL}loggedOut`}>
+            <LogOutIcon className="h-6 w-6" />
+            Log out
+          </DropdownItem>
+        </div>
       </ul>
     </div>
   );

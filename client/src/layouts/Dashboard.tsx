@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { UserLists } from '@/components/UserLists';
-import { createList, getLists } from '@/api/lists';
+import { createList, deleteList, getLists } from '@/api/lists';
 import { List, User } from '@/types';
 import { useLocalStorage } from '@/utils/useLocalStorage';
 
@@ -28,7 +28,7 @@ const Dashboard = ({ user }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setList({
       listTitle: e.target.value,
-      userId: user ? user!._id : '',
+      userId: user ? user._id : '',
     });
   };
 
@@ -50,12 +50,17 @@ const Dashboard = ({ user }: Props) => {
     }
   };
 
+  const handleDelete = (id?: string) => {
+    deleteList(id);
+    setLists((prevLists) => prevLists.filter((list) => list._id !== id));
+  };
+
   return (
     <main className="dark:bg-night-bg h-[calc(100vh-60px)] p-4 text-black dark:text-white">
       <div className="mx-auto max-w-screen-2xl">
         <h1 className="mt-4 text-3xl font-bold">Dashboard</h1>
         <div className="grid-cols-responsive grid gap-2">
-          <UserLists lists={lists} />
+          <UserLists lists={lists} deleteList={handleDelete} />
           {showInput ? (
             <form
               className="dark:border-night-border mt-4 flex flex-col gap-2 rounded-md border p-4"

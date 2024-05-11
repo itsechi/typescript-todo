@@ -31,3 +31,11 @@ export const newList = async (req: Request, res: Response) => {
     console.error(err);
   }
 };
+
+export const deleteList = async (req: Request, res: Response) => {
+  try {
+    await List.findByIdAndDelete(req.body.id);
+  } catch (err) {
+    console.error(err);
+  }
+};
