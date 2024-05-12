@@ -1,4 +1,4 @@
-import { List } from '@/types';
+import { List, Task } from '@/types';
 
 export const getLists = async () => {
   try {
@@ -19,7 +19,11 @@ export const createList = async (list: List) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userId: list.userId, listTitle: list.listTitle }),
+      body: JSON.stringify({
+        userId: list.userId,
+        listTitle: list.listTitle,
+        tasks: list.tasks,
+      }),
     });
     const json = await res.json();
     return json;
@@ -36,6 +40,22 @@ export const deleteList = async (id?: string) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ id }),
+    });
+    const json = await res.json();
+    return json;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const addTask = async (list: List, task: Task) => {
+  try {
+    const res = await fetch(import.meta.env.VITE_API_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: list._id, name: task.name }),
     });
     const json = await res.json();
     return json;

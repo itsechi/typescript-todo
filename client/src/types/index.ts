@@ -2,6 +2,7 @@ export type List = {
   _id?: string;
   listTitle: string;
   userId: string;
+  tasks: Task[];
 };
 
 export type User = {
@@ -9,3 +10,8 @@ export type User = {
   googleId: string;
   displayName: string;
 } | null;
+
+export type Task = {
+  name: string;
+  status: boolean;
+};

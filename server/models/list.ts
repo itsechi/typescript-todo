@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import Task from './Task';
 
 const ListSchema = new Schema({
   listTitle: {
@@ -10,6 +11,17 @@ const ListSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+});
+
+ListSchema.pre('findOneAndDelete', async function (next) {
+  try {
+    const id = this.getQuery()['_id'];
+    await Task.deleteMany({ listId: id });
+    next();
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 export default model('List', ListSchema);
