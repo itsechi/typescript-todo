@@ -8,11 +8,11 @@ import ThemeSwitcher from '@/components/ThemeSwitcher';
 import useShowDropdown from '@/utils/useShowDropdown';
 import { User } from '@/types';
 
-type Props = {
+type NavbarProps = {
   user: User;
 };
 
-const Navbar = ({ user }: Props) => {
+const Navbar = ({ user }: NavbarProps) => {
   const { ref, showDropdown, setShowDropdown } = useShowDropdown();
 
   return (
@@ -47,12 +47,12 @@ const Navbar = ({ user }: Props) => {
 };
 
 const Dropdown = () => {
-  type Props = {
+  type DropdownProps = {
     children: React.ReactNode;
     href: string;
   };
 
-  const DropdownItem = ({ children, href }: Props) => (
+  const DropdownItem = ({ children, href }: DropdownProps) => (
     <li className="hover:bg-hover dark:border-night-border dark:hover:bg-night-hover first:border-b">
       <a
         className="dark:text-night-gray-text flex gap-2 px-3 py-3 font-semibold"
