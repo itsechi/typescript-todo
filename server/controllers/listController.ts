@@ -1,6 +1,5 @@
 import List from '../models/List';
 import { Request, Response } from 'express';
-import Task from '../models/Task';
 
 declare global {
   namespace Express {
@@ -11,9 +10,11 @@ declare global {
 }
 
 export const getLists = async (req: Request, res: Response) => {
-  if (!req.user) return;
+  // if (!req.user) return;
   try {
-    const lists = await List.find({ userId: req.user._id }).populate('tasks');
+    const id = '6647669b09bfff8ffacf7b9e';
+    const lists = await List.find({ userId: id }).populate('tasks'); // TESTING ONLY
+    // const lists = await List.find({ userId: req.user._id }).populate('tasks');
     res.json(lists);
   } catch (err) {
     console.error(err);
@@ -35,24 +36,9 @@ export const newList = async (req: Request, res: Response) => {
 };
 
 export const deleteList = async (req: Request, res: Response) => {
+  console.log('list deleting');
   try {
     await List.findByIdAndDelete(req.body.id);
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-export const addTask = async (req: Request, res: Response) => {
-  try {
-    const newTask = new Task({
-      name: req.body.name,
-      listId: req.body.id,
-    });
-    await List.findByIdAndUpdate(req.body.id, {
-      $push: { tasks: newTask },
-    }).populate('tasks');
-    await newTask.save();
-    res.json(newTask);
   } catch (err) {
     console.error(err);
   }

@@ -1,7 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { createList, deleteList, addTask, getLists } from '@/api/lists';
+import {
+  createList,
+  deleteList,
+  addTask,
+  getLists,
+  deleteTask,
+} from '@/api/lists';
 import { List, Task, User } from '@/types';
 import { useLocalStorage } from '@/utils/useLocalStorage';
 import { UserList } from '@/layouts/UserList';
@@ -63,10 +69,10 @@ const Dashboard = ({ user }: DashboardProps) => {
   };
 
   const handleAddTask = async (task: Task, id?: string) => {
-    const editedList = lists.find((list) => list._id === id) as List;
+    const list = lists.find((list) => list._id === id) as List;
     // User logged in
     if (user) {
-      const response = await addTask(editedList, task);
+      const response = await addTask(list, task);
       setLists((prevLists) => {
         const editedLists = prevLists.map((list) => {
           if (list._id === id) list.tasks.push(response);
@@ -91,11 +97,28 @@ const Dashboard = ({ user }: DashboardProps) => {
     setLists((prevLists) => prevLists.filter((list) => list._id !== id));
   };
 
+  const handleTaskDelete = (id?: string, listId?: string) => {
+    deleteTask(id);
+    setLists((prevLists) => {
+      const editedLists = prevLists.map((list) => {
+        if (list._id === listId) {
+          return {
+            ...list,
+            tasks: list.tasks.filter((task) => task._id !== id),
+          };
+        } else return list;
+      });
+      return editedLists;
+    });
+  };
+
+  const handleStatusChange = () => {};
+
   return (
-    <main className="dark:bg-night-bg h-[calc(100vh-60px)] p-4 text-black dark:text-white">
+    <main className="h-[calc(100vh-60px)] p-4 text-black dark:bg-night-bg dark:text-white">
       <div className="mx-auto max-w-screen-2xl">
         <h1 className="mt-4 text-3xl font-bold">Dashboard</h1>
-        <div className="grid-cols-responsive grid gap-2 items-start">
+        <div className="grid grid-cols-responsive items-start gap-2">
           {lists &&
             lists.map((list, i) => (
               <UserList
@@ -103,11 +126,12 @@ const Dashboard = ({ user }: DashboardProps) => {
                 list={list}
                 deleteList={handleDelete}
                 handleAddTask={handleAddTask}
+                handleTaskDelete={handleTaskDelete}
               />
             ))}
           {showInput ? (
             <form
-              className="dark:border-night-border mt-4 flex flex-col gap-2 rounded-md border p-4"
+              className="mt-4 flex flex-col gap-2 rounded-md border p-4 dark:border-night-border"
               onSubmit={handleSubmit}
             >
               <Input

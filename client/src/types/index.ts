@@ -12,6 +12,7 @@ export type User = {
 } | null;
 
 export type Task = {
+  _id?: string;
   name: string;
   status: boolean;
 };

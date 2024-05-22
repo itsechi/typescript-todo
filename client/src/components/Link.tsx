@@ -6,7 +6,7 @@ type LinkProps = {
 const Link = ({ href, children }: LinkProps) => {
   return (
     <a
-      className="dark:text-dark-primary font-semibold text-indigo-600"
+      className="dark:text-dark-primary font-semibold text-primary"
       href={href}
     >
       {children}
