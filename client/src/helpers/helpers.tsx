@@ -47,7 +47,7 @@ export const updateList = (lists: List[], newName: string, id: string) => {
     if (list._id === id)
       return {
         ...list,
-        listTitle: newName,
+        name: newName,
       };
     else return list;
   });

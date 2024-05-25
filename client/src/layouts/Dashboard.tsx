@@ -16,7 +16,7 @@ const Dashboard = ({ user }: DashboardProps) => {
   const [showInput, setShowInput] = useState(false);
   const [list, setList] = useState<List>({
     _id: '',
-    listTitle: '',
+    name: '',
     userId: '',
     tasks: [],
   });
@@ -35,7 +35,7 @@ const Dashboard = ({ user }: DashboardProps) => {
     setList((prevList) => {
       return {
         ...prevList,
-        listTitle: e.target.value,
+        name: e.target.value,
       };
     });
   };
@@ -57,7 +57,7 @@ const Dashboard = ({ user }: DashboardProps) => {
     }
     setList({
       _id: '',
-      listTitle: '',
+      name: '',
       userId: '',
       tasks: [],
     });
@@ -86,7 +86,7 @@ const Dashboard = ({ user }: DashboardProps) => {
               onSubmit={handleListSubmit}
             >
               <Input
-                value={list.listTitle}
+                value={list.name}
                 name={'list'}
                 onChange={handleChange}
                 placeholder={'Enter the list name'}
@@ -95,7 +95,15 @@ const Dashboard = ({ user }: DashboardProps) => {
                 <Button styling="primary">Add List</Button>
                 <Button
                   type="button"
-                  onClick={() => setShowInput(false)}
+                  onClick={() => {
+                    setList({
+                      _id: '',
+                      name: '',
+                      userId: '',
+                      tasks: [],
+                    });
+                    setShowInput(false);
+                  }}
                   styling="secondary"
                 >
                   Cancel

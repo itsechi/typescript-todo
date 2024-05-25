@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import Task from './Task';
 
 const ListSchema = new Schema({
-  listTitle: {
+  name: {
     type: String,
     required: true,
   },

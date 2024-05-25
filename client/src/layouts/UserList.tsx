@@ -65,12 +65,12 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
 
   // List edit input context, this makes it save the user changes on outside clicks
   const { ref, isVisible, setIsVisible } = useClickOutside(() => {
-    editListInDB(list.listTitle, list._id);
+    editListInDB(list.name, list._id);
   });
 
   const handleListEdit = (e: React.FormEvent) => {
     e.preventDefault();
-    editListInDB(list.listTitle, list._id);
+    editListInDB(list.name, list._id);
     setIsVisible(!isVisible);
   };
 
@@ -88,7 +88,7 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
             onSubmit={handleListEdit}
           >
             <Input
-              value={list.listTitle}
+              value={list.name}
               name={'list'}
               onChange={handleListInputChange}
               placeholder={'Edit the list name'}
@@ -99,7 +99,7 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
             className="cursor-pointer text-sm font-semibold"
             onClick={() => setIsVisible(!isVisible)}
           >
-            {list.listTitle}
+            {list.name}
           </h3>
         )}
         <button onClick={() => handleListDelete(list._id)}>
@@ -136,7 +136,14 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
             <Button
               styling="secondary"
               type="button"
-              onClick={() => setShowInput(false)}
+              onClick={() => {
+                setTask({
+                  _id: '',
+                  name: '',
+                  status: false,
+                });
+                setShowInput(false);
+              }}
             >
               Cancel
             </Button>

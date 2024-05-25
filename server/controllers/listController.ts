@@ -24,7 +24,7 @@ export const getLists = async (req: Request, res: Response) => {
 export const newList = async (req: Request, res: Response) => {
   try {
     const newList = new List({
-      listTitle: req.body.listTitle,
+      name: req.body.name,
       userId: req.body.userId,
       tasks: req.body.tasks,
     });
@@ -47,7 +47,7 @@ export const deleteList = async (req: Request, res: Response) => {
 export const editList = async (req: Request, res: Response) => {
   try {
     await List.findByIdAndUpdate(req.body.id, {
-      listTitle: req.body.listTitle,
+      name: req.body.name,
     });
   } catch (err) {
     console.error(`Error editing the list from the DB: ${err}`);

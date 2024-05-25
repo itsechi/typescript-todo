@@ -1,6 +1,6 @@
 export type List = {
   _id: string;
-  listTitle: string;
+  name: string;
   userId: string;
   tasks: Task[];
 };
