@@ -4,13 +4,13 @@ import { List, Task } from '@/types';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 type TasksProps = {
-  listId?: string;
+  listId: string;
   tasks: Task[];
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
 };
 
 export const Tasks = ({ tasks, listId, setLists }: TasksProps) => {
-  const handleTaskDelete = (taskId?: string, listId?: string) => {
+  const handleTaskDelete = (taskId: string, listId: string) => {
     deleteTaskFromDB(taskId);
     setLists((prevLists) => {
       const editedLists = deleteTask(prevLists, listId, taskId);
@@ -20,8 +20,8 @@ export const Tasks = ({ tasks, listId, setLists }: TasksProps) => {
 
   const handleStatusChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    taskId?: string,
-    listId?: string,
+    taskId: string,
+    listId: string,
   ) => {
     const status = e.target.checked;
     updateTaskStatusInDB(status, taskId);

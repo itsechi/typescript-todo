@@ -1,5 +1,5 @@
 export type List = {
-  _id?: string;
+  _id: string;
   listTitle: string;
   userId: string;
   tasks: Task[];
@@ -12,7 +12,7 @@ export type User = {
 } | null;
 
 export type Task = {
-  _id?: string;
+  _id: string;
   name: string;
   status: boolean;
 };

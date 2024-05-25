@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { createList, getLists } from '@/api/lists';
+import { createListInDB, getListsFromDB } from '@/api/lists';
 import { List, User } from '@/types';
 import { useLocalStorage } from '@/utils/useLocalStorage';
 import { UserList } from '@/layouts/UserList';
@@ -15,6 +15,7 @@ type DashboardProps = {
 const Dashboard = ({ user }: DashboardProps) => {
   const [showInput, setShowInput] = useState(false);
   const [list, setList] = useState<List>({
+    _id: '',
     listTitle: '',
     userId: '',
     tasks: [],
@@ -24,7 +25,7 @@ const Dashboard = ({ user }: DashboardProps) => {
   useEffect(() => {
     // Get lists from the db and set them in state
     const handleFetchData = async () => {
-      const response = (await getLists()) || [];
+      const response = (await getListsFromDB()) || [];
       setLists(response);
     };
     handleFetchData();
@@ -48,7 +49,7 @@ const Dashboard = ({ user }: DashboardProps) => {
     };
     if (user) {
       // User logged in
-      const response = await createList(updatedList);
+      const response = await createListInDB(updatedList);
       setLists((prevLists) => [...prevLists, response]);
     } else {
       // Local storage

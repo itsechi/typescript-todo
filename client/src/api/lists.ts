@@ -1,6 +1,6 @@
 import { List } from '@/types';
 
-export const getLists = async () => {
+export const getListsFromDB = async () => {
   try {
     const res = await fetch(import.meta.env.VITE_API_URL, {
       credentials: 'include',
@@ -12,7 +12,7 @@ export const getLists = async () => {
   }
 };
 
-export const createList = async (list: List) => {
+export const createListInDB = async (list: List) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}lists`, {
       method: 'POST',
@@ -32,7 +32,7 @@ export const createList = async (list: List) => {
   }
 };
 
-export const deleteList = async (id?: string) => {
+export const deleteListFromDB = async (id: string) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}lists/${id}`, {
       method: 'DELETE',
@@ -48,7 +48,8 @@ export const deleteList = async (id?: string) => {
   }
 };
 
-export const editList = async (listTitle: string, id?: string) => {
+export const editListInDB = async (listTitle: string, id: string) => {
+  console.log(listTitle, id);
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}lists/${id}`, {
       method: 'PUT',

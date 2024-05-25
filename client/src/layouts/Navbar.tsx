@@ -25,7 +25,10 @@ const Navbar = ({ user }: NavbarProps) => {
         <nav className="flex items-center gap-2 dark:text-white">
           <ThemeSwitcher />
           {user ? (
-            <div ref={ref} className="relative">
+            <div
+              ref={ref as React.RefObject<HTMLDivElement>}
+              className="relative"
+            >
               {' '}
               <button
                 className="font-semibold underline underline-offset-2 "

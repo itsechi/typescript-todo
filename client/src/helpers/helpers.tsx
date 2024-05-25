@@ -1,13 +1,13 @@
 import { List, Task } from '@/types';
 
-export const addTask = (lists: List[], task: Task, id?: string) => {
+export const addTask = (lists: List[], task: Task, id: string) => {
   return lists.map((list) => {
     if (list._id === id) list.tasks.push(task);
     return list;
   });
 };
 
-export const deleteTask = (lists: List[], listId?: string, taskId?: string) => {
+export const deleteTask = (lists: List[], listId: string, taskId: string) => {
   return lists.map((list) => {
     if (list._id === listId) {
       return {
@@ -22,8 +22,8 @@ export const deleteTask = (lists: List[], listId?: string, taskId?: string) => {
 export const updateTaskStatus = (
   lists: List[],
   status: boolean,
-  listId?: string,
-  taskId?: string,
+  listId: string,
+  taskId: string,
 ) => {
   return lists.map((list) => {
     if (list._id === listId) {
@@ -39,5 +39,16 @@ export const updateTaskStatus = (
         }),
       };
     } else return list;
+  });
+};
+
+export const updateList = (lists: List[], newName: string, id: string) => {
+  return lists.map((list) => {
+    if (list._id === id)
+      return {
+        ...list,
+        listTitle: newName,
+      };
+    else return list;
   });
 };

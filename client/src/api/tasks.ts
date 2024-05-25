@@ -20,7 +20,7 @@ export const addTaskToDB = async (list: List, task: Task) => {
   }
 };
 
-export const deleteTaskFromDB = async (id?: string) => {
+export const deleteTaskFromDB = async (id: string) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}tasks/${id}`, {
       method: 'DELETE',
@@ -38,7 +38,7 @@ export const deleteTaskFromDB = async (id?: string) => {
 
 export const updateTaskStatusInDB = async (
   status: boolean,
-  taskId?: string,
+  taskId: string,
 ) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}tasks/${taskId}`, {
