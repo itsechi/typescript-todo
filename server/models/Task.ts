@@ -10,6 +10,10 @@ const TaskSchema = new Schema({
     ref: 'List',
     required: true,
   },
+  status: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 export default model('Task', TaskSchema);

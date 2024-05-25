@@ -8,6 +8,7 @@ export const addTask = async (req: Request, res: Response) => {
     const newTask = new Task({
       name: req.body.name,
       listId: req.body.id,
+      status: req.body.status,
     });
     await List.findByIdAndUpdate(req.body.id, {
       $push: { tasks: newTask },
@@ -15,7 +16,7 @@ export const addTask = async (req: Request, res: Response) => {
     await newTask.save();
     res.json(newTask);
   } catch (err) {
-    console.error(err);
+    console.error(`Error adding the tasks to the DB: ${err}`);
   }
 };
 
@@ -28,6 +29,14 @@ export const deleteTask = async (req: Request, res: Response) => {
     });
     await Task.findByIdAndDelete(req.body.id);
   } catch (err) {
-    console.error(err);
+    console.error(`Error deleting the task from the DB: ${err}`);
+  }
+};
+
+export const updateTaskStatus = async (req: Request, res: Response) => {
+  try {
+    await Task.findByIdAndUpdate(req.body.taskId, { status: req.body.status });
+  } catch (err) {
+    console.error(`Error updating the task in the DB: ${err}`);
   }
 };

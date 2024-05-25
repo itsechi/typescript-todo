@@ -11,6 +11,6 @@ export const logInUser = async () => {
     const data = await res.json();
     return data as User;
   } catch (err) {
-    console.error(err);
+    console.error(`Error logging in the user: ${err}`);
   }
 };

@@ -1,14 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
-import {
-  createList,
-  deleteList,
-  addTask,
-  getLists,
-  deleteTask,
-} from '@/api/lists';
-import { List, Task, User } from '@/types';
+import { createList, getLists } from '@/api/lists';
+import { List, User } from '@/types';
 import { useLocalStorage } from '@/utils/useLocalStorage';
 import { UserList } from '@/layouts/UserList';
 import { Input } from '@/components/Input';
@@ -28,6 +22,7 @@ const Dashboard = ({ user }: DashboardProps) => {
   const [lists, setLists] = useLocalStorage<List[]>('LISTS', []);
 
   useEffect(() => {
+    // Get lists from the db and set them in state
     const handleFetchData = async () => {
       const response = (await getLists()) || [];
       setLists(response);
@@ -44,7 +39,7 @@ const Dashboard = ({ user }: DashboardProps) => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleListSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const updatedList = {
       ...list,
@@ -68,52 +63,6 @@ const Dashboard = ({ user }: DashboardProps) => {
     setShowInput(false);
   };
 
-  const handleAddTask = async (task: Task, id?: string) => {
-    const list = lists.find((list) => list._id === id) as List;
-    // User logged in
-    if (user) {
-      const response = await addTask(list, task);
-      setLists((prevLists) => {
-        const editedLists = prevLists.map((list) => {
-          if (list._id === id) list.tasks.push(response);
-          return list;
-        });
-        return editedLists;
-      });
-    } else {
-      // Local storage
-      setLists((prevLists) => {
-        const editedLists = prevLists.map((list) => {
-          if (list._id === id) list.tasks.push(task);
-          return list;
-        });
-        return editedLists;
-      });
-    }
-  };
-
-  const handleDelete = (id?: string) => {
-    deleteList(id);
-    setLists((prevLists) => prevLists.filter((list) => list._id !== id));
-  };
-
-  const handleTaskDelete = (id?: string, listId?: string) => {
-    deleteTask(id);
-    setLists((prevLists) => {
-      const editedLists = prevLists.map((list) => {
-        if (list._id === listId) {
-          return {
-            ...list,
-            tasks: list.tasks.filter((task) => task._id !== id),
-          };
-        } else return list;
-      });
-      return editedLists;
-    });
-  };
-
-  const handleStatusChange = () => {};
-
   return (
     <main className="h-[calc(100vh-60px)] p-4 text-black dark:bg-night-bg dark:text-white">
       <div className="mx-auto max-w-screen-2xl">
@@ -124,15 +73,16 @@ const Dashboard = ({ user }: DashboardProps) => {
               <UserList
                 key={i}
                 list={list}
-                deleteList={handleDelete}
-                handleAddTask={handleAddTask}
-                handleTaskDelete={handleTaskDelete}
+                setLists={setLists}
+                setList={setList}
+                lists={lists}
+                user={user}
               />
             ))}
           {showInput ? (
             <form
               className="mt-4 flex flex-col gap-2 rounded-md border p-4 dark:border-night-border"
-              onSubmit={handleSubmit}
+              onSubmit={handleListSubmit}
             >
               <Input
                 value={list.listTitle}

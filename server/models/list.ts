@@ -20,7 +20,9 @@ ListSchema.pre('findOneAndDelete', async function (next) {
     await Task.deleteMany({ listId: id });
     next();
   } catch (err) {
-    console.error(err);
+    console.error(
+      `Error deleting all of the tasks attached to the list: ${err}`,
+    );
   }
 });
 

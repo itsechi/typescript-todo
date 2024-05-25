@@ -28,7 +28,7 @@ authRouter.get(
 
 authRouter.get('/loggedOut', (req: Request, res: Response) => {
   req.logout((err) => {
-    if (err) console.error(err);
+    if (err) console.error(`Error logging out the user: ${err}`);
     res.redirect(process.env.CLIENT_URL!);
   });
 });

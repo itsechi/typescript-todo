@@ -17,7 +17,7 @@ export const getLists = async (req: Request, res: Response) => {
     // const lists = await List.find({ userId: req.user._id }).populate('tasks');
     res.json(lists);
   } catch (err) {
-    console.error(err);
+    console.error(`Error getting the lists from the DB: ${err}`);
   }
 };
 
@@ -31,7 +31,7 @@ export const newList = async (req: Request, res: Response) => {
     await newList.save();
     res.json(newList);
   } catch (err) {
-    console.error(err);
+    console.error(`Error adding the list to the DB: ${err}`);
   }
 };
 
@@ -40,6 +40,16 @@ export const deleteList = async (req: Request, res: Response) => {
   try {
     await List.findByIdAndDelete(req.body.id);
   } catch (err) {
-    console.error(err);
+    console.error(`Error deleting the list from the DB: ${err}`);
+  }
+};
+
+export const editList = async (req: Request, res: Response) => {
+  try {
+    await List.findByIdAndUpdate(req.body.id, {
+      listTitle: req.body.listTitle,
+    });
+  } catch (err) {
+    console.error(`Error editing the list from the DB: ${err}`);
   }
 };
