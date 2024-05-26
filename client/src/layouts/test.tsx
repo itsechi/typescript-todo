@@ -33,6 +33,15 @@ const Dashboard = ({ user }: DashboardProps) => {
     reset,
   } = useForm<Inputs>();
 
+  const fetchLists = async () => {
+    try {
+      const response = await getListsFromDB();
+      setLists(response || []);
+    } catch (error) {
+      console.error('Failed to fetch lists:', error);
+    }
+  };
+
   const onSubmit: SubmitHandler<Inputs> = async () => {
     const newList = {
       ...currentList,
@@ -65,16 +74,8 @@ const Dashboard = ({ user }: DashboardProps) => {
   };
 
   useEffect(() => {
-    const fetchLists = async () => {
-      try {
-        const response = await getListsFromDB();
-        setLists(response || []);
-      } catch (error) {
-        console.error('Failed to fetch lists:', error);
-      }
-    };
     fetchLists();
-  }, [setLists]);
+  }, [fetchLists]);
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -99,6 +100,7 @@ const Dashboard = ({ user }: DashboardProps) => {
               key={list._id}
               list={list}
               setLists={setLists}
+              setCurrentList={setCurrentList}
               lists={lists}
               user={user}
             />
@@ -115,7 +117,10 @@ const Dashboard = ({ user }: DashboardProps) => {
               )}
               <Input
                 value={currentList.name}
-                register={register}
+                register={register('listName', {
+                  required: true,
+                  minLength: 1,
+                })}
                 onChange={handleInputChange}
                 placeholder="Enter the list name"
                 label="listName"

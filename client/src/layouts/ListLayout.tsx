@@ -7,14 +7,18 @@ import { addTask, updateList } from '@/helpers/helpers';
 import { List, Task, User } from '@/types';
 import { useClickOutside } from '@/utils/useClickOutside';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 type ListLayoutProps = {
   list: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
-  setList: React.Dispatch<React.SetStateAction<List>>;
   lists: List[];
   user: User;
+};
+
+type Inputs = {
+  listName: string;
 };
 
 export const ListLayout = ({
@@ -29,6 +33,12 @@ export const ListLayout = ({
     name: '',
     status: false,
   });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<Inputs>();
 
   // Task functions
   const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +49,12 @@ export const ListLayout = ({
       };
     });
   };
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
   const handleTaskSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,8 +92,7 @@ export const ListLayout = ({
     editListInDB(list.name, list._id);
   });
 
-  const handleListEdit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<Inputs> = () => {
     editListInDB(list.name, list._id);
     setIsVisible(!isVisible);
   };
@@ -93,13 +108,19 @@ export const ListLayout = ({
         {isVisible ? (
           <form
             ref={ref as React.RefObject<HTMLFormElement>}
-            onSubmit={handleListEdit}
+            onSubmit={handleSubmit(onSubmit)}
           >
+            {errors.listName && (
+              <span className="text-red-600">
+                The list name must contain at least one character.
+              </span>
+            )}
             <Input
               value={list.name}
-              name={'list'}
               onChange={handleListInputChange}
               placeholder={'Edit the list name'}
+              register={register}
+              label="listName"
             />
           </form>
         ) : (
@@ -133,7 +154,6 @@ export const ListLayout = ({
         >
           <Input
             value={task.name}
-            name={'task'}
             onChange={handleTaskInputChange}
             placeholder={'Enter the task name'}
           />
