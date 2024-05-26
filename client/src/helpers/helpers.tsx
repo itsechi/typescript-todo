@@ -18,12 +18,23 @@ export const deleteTask = (lists: List[], listId: string, taskId: string) => {
   });
 };
 
-// fix this to make it update the entire task not just the status
-export const updateTaskStatus = (
+export const updateList = (lists: List[], newName: string, id: string) => {
+  return lists.map((list) => {
+    if (list._id === id)
+      return {
+        ...list,
+        name: newName,
+      };
+    else return list;
+  });
+};
+
+export const updateTask = (
   lists: List[],
-  status: boolean,
+  newName: string,
   listId: string,
   taskId: string,
+  status: boolean,
 ) => {
   return lists.map((list) => {
     if (list._id === listId) {
@@ -34,21 +45,11 @@ export const updateTaskStatus = (
             return {
               ...task,
               status,
+              name: newName,
             };
           } else return task;
         }),
       };
     } else return list;
-  });
-};
-
-export const updateList = (lists: List[], newName: string, id: string) => {
-  return lists.map((list) => {
-    if (list._id === id)
-      return {
-        ...list,
-        name: newName,
-      };
-    else return list;
   });
 };

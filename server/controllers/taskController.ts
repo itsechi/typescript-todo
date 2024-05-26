@@ -33,10 +33,13 @@ export const deleteTask = async (req: Request, res: Response) => {
   }
 };
 
-export const updateTaskStatus = async (req: Request, res: Response) => {
+export const editTask = async (req: Request, res: Response) => {
   try {
-    await Task.findByIdAndUpdate(req.body.taskId, { status: req.body.status });
+    await Task.findByIdAndUpdate(req.body.taskId, {
+      name: req.body.name,
+      status: req.body.status,
+    });
   } catch (err) {
-    console.error(`Error updating the task in the DB: ${err}`);
+    console.error(`Error editing the task in the DB: ${err}`);
   }
 };

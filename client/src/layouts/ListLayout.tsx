@@ -2,14 +2,14 @@ import { deleteListFromDB, editListInDB } from '@/api/lists';
 import { addTaskToDB } from '@/api/tasks';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
-import { Tasks } from '@/components/Tasks';
+import { TaskLayout } from '@/components/TaskLayout';
 import { addTask, updateList } from '@/helpers/helpers';
 import { List, Task, User } from '@/types';
 import { useClickOutside } from '@/utils/useClickOutside';
 import { PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
-type UserListProps = {
+type ListLayoutProps = {
   list: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setList: React.Dispatch<React.SetStateAction<List>>;
@@ -17,7 +17,12 @@ type UserListProps = {
   user: User;
 };
 
-export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
+export const ListLayout = ({
+  user,
+  list,
+  lists,
+  setLists,
+}: ListLayoutProps) => {
   const [showInput, setShowInput] = useState(false);
   const [task, setTask] = useState<Task>({
     _id: '',
@@ -35,11 +40,13 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
     });
   };
 
-  const handleTaskSubmit = async (task: Task, id: string) => {
-    const list = lists.find((list) => list._id === id) as List;
+  const handleTaskSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const id = list._id;
+    const currentList = lists.find((list) => list._id === id) as List;
     // User logged in
     if (user) {
-      const response = await addTaskToDB(list, task);
+      const response = await addTaskToDB(currentList, task);
       setLists((prevLists) => {
         const editedList = addTask(prevLists, response, id);
         return editedList;
@@ -51,6 +58,7 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
         return editedList;
       });
     }
+    setShowInput(false);
   };
 
   // List functions
@@ -108,22 +116,20 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
       </div>
       {list.tasks.length > 0 && (
         <div>
-          <Tasks listId={list._id} tasks={list.tasks} setLists={setLists} />
+          {list.tasks.map((task, i) => (
+            <TaskLayout
+              key={i}
+              task={task}
+              listId={list._id}
+              setLists={setLists}
+            />
+          ))}
         </div>
       )}
       {showInput ? (
         <form
           className="flex flex-col gap-2 rounded-md p-4 pt-1 dark:border-night-border"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleTaskSubmit(task, list._id);
-            setTask({
-              _id: '',
-              name: '',
-              status: false,
-            });
-            setShowInput(false);
-          }}
+          onSubmit={handleTaskSubmit}
         >
           <Input
             value={task.name}
@@ -132,7 +138,9 @@ export const UserList = ({ user, list, lists, setLists }: UserListProps) => {
             placeholder={'Enter the task name'}
           />
           <div className="flex gap-2 text-sm">
-            <Button styling="primary">Add Task</Button>
+            <Button styling="primary" type="submit">
+              Add Task
+            </Button>
             <Button
               styling="secondary"
               type="button"

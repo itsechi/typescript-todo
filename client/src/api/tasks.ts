@@ -36,9 +36,10 @@ export const deleteTaskFromDB = async (id: string) => {
   }
 };
 
-export const updateTaskStatusInDB = async (
-  status: boolean,
+export const editTaskInDB = async (
+  name: string,
   taskId: string,
+  status: boolean,
 ) => {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}tasks/${taskId}`, {
@@ -46,14 +47,11 @@ export const updateTaskStatusInDB = async (
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        taskId,
-        status,
-      }),
+      body: JSON.stringify({ name, taskId, status }),
     });
     const json = await res.json();
     return json;
   } catch (err) {
-    console.error(`Error updating the tasks in the DB: ${err}`);
+    console.error(`Error editing the task: ${err}`);
   }
 };

@@ -49,7 +49,6 @@ export const deleteListFromDB = async (id: string) => {
 };
 
 export const editListInDB = async (name: string, id: string) => {
-  console.log(name, id);
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}lists/${id}`, {
       method: 'PUT',

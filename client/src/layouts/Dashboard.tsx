@@ -4,7 +4,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { createListInDB, getListsFromDB } from '@/api/lists';
 import { List, User } from '@/types';
 import { useLocalStorage } from '@/utils/useLocalStorage';
-import { UserList } from '@/layouts/UserList';
+import { ListLayout } from '@/layouts/ListLayout';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';
 
@@ -71,7 +71,7 @@ const Dashboard = ({ user }: DashboardProps) => {
         <div className="grid grid-cols-responsive items-start gap-2">
           {lists &&
             lists.map((list, i) => (
-              <UserList
+              <ListLayout
                 key={i}
                 list={list}
                 setLists={setLists}
@@ -92,7 +92,9 @@ const Dashboard = ({ user }: DashboardProps) => {
                 placeholder={'Enter the list name'}
               />
               <div className="flex gap-2 text-sm">
-                <Button styling="primary">Add List</Button>
+                <Button type="submit" styling="primary">
+                  Add List
+                </Button>
                 <Button
                   type="button"
                   onClick={() => {
