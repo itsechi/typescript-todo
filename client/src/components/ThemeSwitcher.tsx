@@ -1,4 +1,4 @@
-import useDarkSide from '../utils/useDarkSide';
+import useDarkSide from '../hooks/useDarkSide';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
 export default function ThemeSwitcher() {

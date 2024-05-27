@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { createListInDB, getListsFromDB } from '@/api/lists';
 import { List, User } from '@/types';
-import { useLocalStorage } from '@/utils/useLocalStorage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { ListLayout } from '@/layouts/ListLayout';
 import { Input } from '@/components/Input';
 import { Button } from '@/components/Button';

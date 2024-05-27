@@ -5,7 +5,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from '@/components/Link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-import { useClickOutside } from '@/utils/useClickOutside';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { User } from '@/types';
 
 type NavbarProps = {

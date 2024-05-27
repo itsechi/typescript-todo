@@ -1,7 +1,7 @@
 import { deleteTaskFromDB, editTaskInDB } from '@/api/tasks';
-import { deleteTask, updateTask } from '@/helpers/helpers';
+import { deleteTask, updateTask } from '@/helpers';
 import { List, Task } from '@/types';
-import { useClickOutside } from '@/utils/useClickOutside';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { PencilSquareIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Input } from './Input';
 
@@ -75,7 +75,7 @@ export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
         >
           <Input
             value={task.name}
-            name={'task'}
+            label={'taskName'}
             onChange={handleTaskInputChange}
             placeholder={'Edit the task name'}
           />
