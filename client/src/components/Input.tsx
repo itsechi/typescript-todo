@@ -1,7 +1,8 @@
 import { Path, UseFormRegister } from 'react-hook-form';
 
 type Inputs = {
-  listName: string;
+  // listName: string;
+  taskName: string;
 };
 
 type InputProps = {
