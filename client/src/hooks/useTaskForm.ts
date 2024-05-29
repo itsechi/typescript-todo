@@ -1,8 +1,9 @@
-import { addTaskToDB } from '@/api/tasks';
-import { addTask } from '@/helpers';
+import { addTaskToDB, editTaskInDB } from '@/api/tasks';
+import { addTask, updateTask } from '@/helpers';
 import { List, Task, User } from '@/types';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useClickOutside } from './useClickOutside';
 
 type Inputs = {
   taskName: string;
@@ -34,7 +35,7 @@ export const useTaskForm = (
     }
   }, [isSubmitSuccessful, reset]);
 
-  const clearTaskInput = () => {
+  const resetTaskForm = () => {
     setTask({
       _id: '',
       name: '',
@@ -44,7 +45,7 @@ export const useTaskForm = (
     reset();
   };
 
-  const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask((prevTask) => {
       return {
         ...prevTask,
@@ -70,7 +71,7 @@ export const useTaskForm = (
         return editedList;
       });
     }
-    clearTaskInput();
+    resetTaskForm();
     setShowTaskInput(false);
   };
 
@@ -78,11 +79,58 @@ export const useTaskForm = (
     task,
     showTaskInput,
     setShowTaskInput,
+    handleInputChange,
+    handleSubmit,
+    handleTaskSubmit,
+    resetTaskForm,
+    errors,
+    register,
+  };
+};
+
+export const useEditTaskForm = (
+  task: Task,
+  listId: string,
+  setLists: React.Dispatch<React.SetStateAction<List[]>>,
+) => {
+  // Task edit input context, this makes it save the user changes on outside clicks
+  const { ref, isVisible, setIsVisible } = useClickOutside(() => {
+    editTaskInDB(task.name, task._id, task.status);
+  });
+
+  const {
     register,
     handleSubmit,
-    handleTaskInputChange,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const handleTaskEdit = () => {
+    editTaskInDB(task.name, task._id, task.status);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    const taskId = task._id;
+    setLists((prevLists: List[]) => {
+      const editedList = updateTask(
+        prevLists,
+        newName,
+        listId,
+        taskId,
+        task.status,
+      );
+      return editedList;
+    });
+  };
+
+  return {
+    ref,
+    isVisible,
+    setIsVisible,
+    handleInputChange,
+    handleTaskEdit,
+    handleSubmit,
+    register,
     errors,
-    handleTaskSubmit,
-    clearTaskInput,
   };
 };

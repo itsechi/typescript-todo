@@ -16,12 +16,12 @@ export const AddTaskForm = ({ list, lists, setLists, user }: TaskFormProps) => {
     task,
     showTaskInput,
     setShowTaskInput,
-    register,
+    handleInputChange,
     handleSubmit,
-    handleTaskInputChange,
-    errors,
     handleTaskSubmit,
-    clearTaskInput,
+    resetTaskForm,
+    errors,
+    register,
   } = useTaskForm(list, lists, setLists, user);
 
   return showTaskInput ? (
@@ -37,7 +37,7 @@ export const AddTaskForm = ({ list, lists, setLists, user }: TaskFormProps) => {
       <Input
         label="taskName"
         value={task.name}
-        onChange={handleTaskInputChange}
+        onChange={handleInputChange}
         placeholder={'Enter the task name'}
         register={register}
       />
@@ -45,7 +45,7 @@ export const AddTaskForm = ({ list, lists, setLists, user }: TaskFormProps) => {
         <Button styling="primary" type="submit">
           Add Task
         </Button>
-        <Button styling="secondary" type="button" onClick={clearTaskInput}>
+        <Button styling="secondary" type="button" onClick={resetTaskForm}>
           Cancel
         </Button>
       </div>

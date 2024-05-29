@@ -1,35 +1,27 @@
-import { useListForm } from '@/hooks/useListForm';
-import { List, User } from '@/types';
+import { useEditListForm } from '@/hooks/useListForm';
+import { List } from '@/types';
 import { Input } from './Input';
 
 type ListFormProps = {
   list: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
-  lists: List[];
-  user: User;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const EditListForm = ({
   list,
-  lists,
   setLists,
-  user,
+  setIsVisible,
 }: ListFormProps) => {
-  const {
-    ref,
-    isVisible,
-    setIsVisible,
-    handleListInputChange,
-    handleListSubmit,
-    handleSubmit,
-    errors,
-    register,
-  } = useListForm(list, lists, setLists, user);
+  const { handleInputChange, handleListEdit, handleSubmit, errors, register } =
+    useEditListForm(list, setLists);
 
-  return isVisible ? (
+  return (
     <form
-      ref={ref as React.RefObject<HTMLFormElement>}
-      onSubmit={handleSubmit(handleListSubmit)}
+      onSubmit={handleSubmit(() => {
+        handleListEdit();
+        setIsVisible(false);
+      })}
     >
       {errors.listName && (
         <span className="text-red-600">
@@ -38,18 +30,11 @@ export const EditListForm = ({
       )}
       <Input
         value={list.name}
-        onChange={handleListInputChange}
+        onChange={handleInputChange}
         placeholder={'Edit the list name'}
         register={register}
         label="listName"
       />
     </form>
-  ) : (
-    <h3
-      className="cursor-pointer text-sm font-semibold"
-      onClick={() => setIsVisible(!isVisible)}
-    >
-      {list.name}
-    </h3>
   );
 };
