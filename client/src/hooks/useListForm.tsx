@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 
 type Inputs = {
   listName: string;
+  taskName: string;
 };
 
 export const useAddListForm = (

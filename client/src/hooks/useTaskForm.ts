@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useClickOutside } from './useClickOutside';
 
 type Inputs = {
+  listName: string;
   taskName: string;
 };
 

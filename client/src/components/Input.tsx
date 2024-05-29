@@ -1,7 +1,7 @@
 import { Path, UseFormRegister } from 'react-hook-form';
 
 type Inputs = {
-  // listName: string;
+  listName: string;
   taskName: string;
 };
 
@@ -25,8 +25,8 @@ export const Input = ({
       className="rounded-lg border-border-dark bg-hover px-2 py-1.5 text-sm focus:outline-none focus:ring-primary dark:border-night-border dark:bg-night-hover"
       type="text"
       placeholder={placeholder}
-      defaultValue={value}
-      {...register(label, { required: 'This field is required', minLength: 1 })}
+      value={value}
+      {...register(label, { required: true, minLength: 1 })}
       onChange={onChange}
     />
   );
