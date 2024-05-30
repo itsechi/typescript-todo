@@ -96,13 +96,13 @@ export const useEditListForm = (
   // List edit input context, this makes it save the user changes on outside clicks
   const { ref, isVisible, setIsVisible } = useClickOutside(() => {
     editListInDB(list.name, list._id);
-  });
+  }, list.name);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ mode: 'onBlur' });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;

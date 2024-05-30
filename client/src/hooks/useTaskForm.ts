@@ -97,13 +97,13 @@ export const useEditTaskForm = (
   // Task edit input context, this makes it save the user changes on outside clicks
   const { ref, isVisible, setIsVisible } = useClickOutside(() => {
     editTaskInDB(task.name, task._id, task.status);
-  });
+  }, task.name);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ mode: 'onBlur' });
 
   const handleTaskEdit = () => {
     editTaskInDB(task.name, task._id, task.status);
