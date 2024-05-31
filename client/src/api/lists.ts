@@ -5,8 +5,7 @@ export const getListsFromDB = async () => {
     const res = await fetch(import.meta.env.VITE_API_URL, {
       credentials: 'include',
     });
-    const data = await res.json();
-    return data as List[];
+    return (await res.json()) as List[];
   } catch (err) {
     console.error(`Error getting the lists from the DB: ${err}`);
   }
@@ -25,8 +24,7 @@ export const createListInDB = async (list: List) => {
         tasks: list.tasks,
       }),
     });
-    const json = await res.json();
-    return json;
+    return await res.json();
   } catch (err) {
     console.error(`Error creating the list: ${err}`);
   }
@@ -41,8 +39,7 @@ export const deleteListFromDB = async (id: string) => {
       },
       body: JSON.stringify({ id }),
     });
-    const json = await res.json();
-    return json;
+    return await res.json();
   } catch (err) {
     console.error(`Error deleting the list: ${err}`);
   }
@@ -57,8 +54,7 @@ export const editListInDB = async (name: string, id: string) => {
       },
       body: JSON.stringify({ name, id }),
     });
-    const json = await res.json();
-    return json;
+    return await res.json();
   } catch (err) {
     console.error(`Error editing the list: ${err}`);
   }

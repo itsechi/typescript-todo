@@ -5,6 +5,12 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useClickOutside } from './useClickOutside';
 
+const initialState = {
+  _id: '',
+  name: '',
+  status: false,
+};
+
 export const useTaskForm = (
   list: List,
   lists: List[],
@@ -12,11 +18,7 @@ export const useTaskForm = (
   user: User,
 ) => {
   const [showTaskInput, setShowTaskInput] = useState(false);
-  const [task, setTask] = useState<Task>({
-    _id: '',
-    name: '',
-    status: false,
-  });
+  const [task, setTask] = useState<Task>(initialState);
 
   const {
     register,
@@ -32,11 +34,7 @@ export const useTaskForm = (
   }, [isSubmitSuccessful, reset]);
 
   const resetTaskForm = () => {
-    setTask({
-      _id: '',
-      name: '',
-      status: false,
-    });
+    setTask(initialState);
     setShowTaskInput(false);
     reset();
   };

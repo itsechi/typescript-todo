@@ -6,7 +6,7 @@ import { updateList } from '@/helpers';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 
-const initialListState = (): List => ({
+const initialState = (): List => ({
   _id: '',
   name: '',
   userId: '',
@@ -18,7 +18,7 @@ export const useAddListForm = (
   setLists: React.Dispatch<React.SetStateAction<List[]>>,
 ) => {
   const [showListInput, setShowListInput] = useState(false);
-  const [list, setList] = useState<List>(initialListState);
+  const [list, setList] = useState<List>(initialState);
 
   const {
     register,
@@ -55,7 +55,7 @@ export const useAddListForm = (
   };
 
   const resetListForm = () => {
-    setList(initialListState);
+    setList(initialState);
     setShowListInput(false);
     reset();
   };
