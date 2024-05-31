@@ -1,14 +1,9 @@
 import { addTaskToDB, editTaskInDB } from '@/api/tasks';
 import { addTask, updateTask } from '@/helpers';
-import { List, Task, User } from '@/types';
+import { Inputs, List, Task, User } from '@/types';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useClickOutside } from './useClickOutside';
-
-type Inputs = {
-  listName: string;
-  taskName: string;
-};
 
 export const useTaskForm = (
   list: List,
@@ -61,16 +56,10 @@ export const useTaskForm = (
     // User logged in
     if (user) {
       const response = await addTaskToDB(currentList, task);
-      setLists((prevLists) => {
-        const editedList = addTask(prevLists, response, id);
-        return editedList;
-      });
+      setLists((prevLists) => addTask(prevLists, response, id));
     } else {
       // Local storage
-      setLists((prevLists) => {
-        const editedList = addTask(prevLists, task, id);
-        return editedList;
-      });
+      setLists((prevLists) => addTask(prevLists, task, id));
     }
     resetTaskForm();
     setShowTaskInput(false);
@@ -112,16 +101,9 @@ export const useEditTaskForm = (
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newName = e.target.value;
     const taskId = task._id;
-    setLists((prevLists: List[]) => {
-      const editedList = updateTask(
-        prevLists,
-        newName,
-        listId,
-        taskId,
-        task.status,
-      );
-      return editedList;
-    });
+    setLists((prevLists: List[]) =>
+      updateTask(prevLists, newName, listId, taskId, task.status),
+    );
   };
 
   return {

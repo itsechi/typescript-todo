@@ -20,29 +20,15 @@ export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
 
   const handleTaskDelete = (taskId: string, listId: string) => {
     deleteTaskFromDB(taskId);
-    setLists((prevLists) => {
-      const editedLists = deleteTask(prevLists, listId, taskId);
-      return editedLists;
-    });
+    setLists((prevLists) => deleteTask(prevLists, listId, taskId));
   };
 
-  const handleStatusChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    taskId: string,
-    listId: string,
-  ) => {
+  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const status = e.target.checked;
     editTaskInDB(task.name, task._id, status);
-    setLists((prevLists) => {
-      const editedLists = updateTask(
-        prevLists,
-        task.name,
-        listId,
-        taskId,
-        status,
-      );
-      return editedLists;
-    });
+    setLists((prevLists) =>
+      updateTask(prevLists, task.name, listId, task._id, status),
+    );
   };
 
   return (
@@ -63,7 +49,7 @@ export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
               className="mr-2 h-4 w-4 rounded border-border-dark bg-hover text-primary focus:ring-primary    dark:border-night-border dark:bg-gray-700 focus:dark:ring-offset-night-bg"
               type="checkbox"
               checked={task.status}
-              onChange={(e) => handleStatusChange(e, task._id, listId)}
+              onChange={handleStatusChange}
             />
             {task.name}
           </label>
