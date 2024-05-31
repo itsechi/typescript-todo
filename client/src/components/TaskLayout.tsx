@@ -5,18 +5,22 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 import { useTaskOperations } from '@/hooks/useTaskOperations';
 
 type TaskLayoutProps = {
-  list: List;
-  task: Task;
+  currentTask: Task;
+  currentList: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
 };
 
-export const TaskLayout = ({ task, list, setLists }: TaskLayoutProps) => {
+export const TaskLayout = ({
+  currentTask,
+  currentList,
+  setLists,
+}: TaskLayoutProps) => {
   const { handleTaskStatusChange, handleTaskEdit, handleTaskDelete } =
-    useTaskOperations(list._id, setLists, task);
+    useTaskOperations(currentList._id, setLists, currentTask);
 
   const { ref, isVisible, setIsVisible } = useClickOutside(
-    () => handleTaskEdit(task),
-    task.name,
+    () => handleTaskEdit(currentTask),
+    currentTask.name,
   );
 
   return (
@@ -24,8 +28,8 @@ export const TaskLayout = ({ task, list, setLists }: TaskLayoutProps) => {
       {isVisible ? (
         <div ref={ref as React.RefObject<HTMLDivElement>}>
           <TaskForm
-            task={task}
-            list={list}
+            currentTask={currentTask}
+            currentList={currentList}
             setLists={setLists}
             setIsVisible={setIsVisible}
           />
@@ -36,16 +40,16 @@ export const TaskLayout = ({ task, list, setLists }: TaskLayoutProps) => {
             <input
               className="mr-2 h-4 w-4 rounded border-border-dark bg-hover text-primary focus:ring-primary    dark:border-night-border dark:bg-gray-700 focus:dark:ring-offset-night-bg"
               type="checkbox"
-              checked={task.status}
+              checked={currentTask.status}
               onChange={handleTaskStatusChange}
             />
-            {task.name}
+            {currentTask.name}
           </label>
           <div>
             <button onClick={() => setIsVisible(!isVisible)}>
               <PencilSquareIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
-            <button onClick={() => handleTaskDelete(task._id)}>
+            <button onClick={() => handleTaskDelete(currentTask._id)}>
               <XMarkIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
           </div>

@@ -7,26 +7,26 @@ import { useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
 type TaskFormProps = {
-  list: List;
+  currentList: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
-  task?: Task;
+  currentTask?: Task;
 };
 
 export const TaskForm = ({
-  list,
+  currentList,
   setLists,
   setIsVisible,
-  task: existingTask,
+  currentTask: existingTask,
 }: TaskFormProps) => {
   const [showTaskInput, setShowTaskInput] = useState(false);
   const {
-    task,
+    currentTask,
     handleTaskInputChange,
     handleTaskSubmit,
     handleTaskEdit,
     handleReset,
-  } = useTaskOperations(list._id, setLists, existingTask);
+  } = useTaskOperations(currentList._id, setLists, existingTask);
 
   const isEditing = !!existingTask;
 
@@ -38,7 +38,7 @@ export const TaskForm = ({
   } = useForm<Inputs>({ mode: isEditing ? 'onBlur' : 'onSubmit' });
 
   const onSubmit: SubmitHandler<Inputs> = () => {
-    handleTaskSubmit(list, task);
+    handleTaskSubmit(currentList, currentTask);
     resetForm();
   };
 
@@ -60,7 +60,7 @@ export const TaskForm = ({
       )}
       <Input
         label="taskName"
-        value={task.name}
+        value={currentTask.name}
         onChange={handleTaskInputChange}
         placeholder={'Enter the task name'}
         register={register}
@@ -84,7 +84,7 @@ export const TaskForm = ({
   const EditForm = (
     <form
       onSubmit={handleSubmit(() => {
-        handleTaskEdit(task);
+        handleTaskEdit(currentTask);
         setIsVisible!(false);
       })}
     >
@@ -94,7 +94,7 @@ export const TaskForm = ({
         </span>
       )}
       <Input
-        value={task.name}
+        value={currentTask.name}
         label={'taskName'}
         onChange={handleTaskInputChange}
         placeholder={'Edit the task name'}

@@ -32,7 +32,7 @@ const Dashboard = ({ user }: DashboardProps) => {
           {lists.map((list) => (
             <ListLayout
               key={list._id}
-              list={list}
+              currentList={list}
               setLists={setLists}
               lists={lists}
               user={user}

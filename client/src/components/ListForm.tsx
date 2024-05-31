@@ -11,15 +11,15 @@ type ListFormProps = {
   lists: List[];
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
-  list?: List;
+  currentList?: List;
 };
 
 export const ListForm = ({
   user,
   lists,
   setLists,
-  list: existingList,
   setIsVisible,
+  currentList: existingList,
 }: ListFormProps) => {
   const [showListInput, setShowListInput] = useState(false);
   const {

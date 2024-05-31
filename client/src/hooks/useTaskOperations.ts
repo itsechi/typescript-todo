@@ -8,7 +8,7 @@ export const useTaskOperations = (
   setLists: React.Dispatch<React.SetStateAction<List[]>>,
   existingTask?: Task,
 ) => {
-  const [task, setTask] = useState<Task>(
+  const [currentTask, setCurrentTask] = useState<Task>(
     existingTask || { _id: '', name: '', status: false },
   );
 
@@ -22,16 +22,22 @@ export const useTaskOperations = (
   ) => {
     const status = e.target.checked;
     setLists((prevLists) =>
-      updateTask(prevLists, task.name, listId, task._id, status),
+      updateTask(prevLists, currentTask.name, listId, currentTask._id, status),
     );
-    await editTaskInDB(task.name, task._id, status);
+    await editTaskInDB(currentTask.name, currentTask._id, status);
   };
 
   const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTask((prevTask) => ({ ...prevTask, name: e.target.value }));
+    setCurrentTask((prevTask) => ({ ...prevTask, name: e.target.value }));
     if (existingTask) {
       setLists((prevLists: List[]) =>
-        updateTask(prevLists, e.target.value, listId, task._id, task.status),
+        updateTask(
+          prevLists,
+          e.target.value,
+          listId,
+          currentTask._id,
+          currentTask.status,
+        ),
       );
     }
   };
@@ -47,11 +53,11 @@ export const useTaskOperations = (
   };
 
   const handleReset = () => {
-    setTask({ _id: '', name: '', status: false });
+    setCurrentTask({ _id: '', name: '', status: false });
   };
 
   return {
-    task,
+    currentTask,
     handleTaskDelete,
     handleTaskStatusChange,
     handleTaskInputChange,

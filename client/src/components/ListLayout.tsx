@@ -7,7 +7,7 @@ import { TaskForm } from './TaskForm';
 import { ListForm } from './ListForm';
 
 type ListLayoutProps = {
-  list: List;
+  currentList: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   lists: List[];
   user: User;
@@ -15,18 +15,18 @@ type ListLayoutProps = {
 
 export const ListLayout = ({
   user,
-  list,
+  currentList,
   lists,
   setLists,
 }: ListLayoutProps) => {
   const { handleListEdit, handleListDelete } = useListOperations(
     user,
     setLists,
-    list,
+    currentList,
   );
   const { ref, isVisible, setIsVisible } = useClickOutside(
-    () => handleListEdit(list),
-    list.name,
+    () => handleListEdit(currentList),
+    currentList.name,
   );
 
   return (
@@ -36,7 +36,7 @@ export const ListLayout = ({
           <div ref={ref as React.RefObject<HTMLDivElement>}>
             <ListForm
               user={user}
-              list={list}
+              currentList={currentList}
               setLists={setLists}
               lists={lists}
               setIsVisible={setIsVisible}
@@ -47,21 +47,26 @@ export const ListLayout = ({
             className="cursor-pointer text-sm font-semibold"
             onClick={() => setIsVisible(!isVisible)}
           >
-            {list.name}
+            {currentList.name}
           </h3>
         )}
-        <button onClick={() => handleListDelete(list._id)}>
+        <button onClick={() => handleListDelete(currentList._id)}>
           <TrashIcon className="h-[20px] w-[20px]" />
         </button>
       </div>
-      {list.tasks.length > 0 && (
+      {currentList.tasks.length > 0 && (
         <div>
-          {list.tasks.map((task, i) => (
-            <TaskLayout key={i} task={task} list={list} setLists={setLists} />
+          {currentList.tasks.map((task, i) => (
+            <TaskLayout
+              key={i}
+              currentTask={task}
+              currentList={currentList}
+              setLists={setLists}
+            />
           ))}
         </div>
       )}
-      <TaskForm list={list} setLists={setLists} />
+      <TaskForm currentList={currentList} setLists={setLists} />
     </div>
   );
 };
