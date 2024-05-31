@@ -56,9 +56,9 @@ export const ListLayout = ({
       </div>
       {currentList.tasks.length > 0 && (
         <div>
-          {currentList.tasks.map((task, i) => (
+          {currentList.tasks.map((task) => (
             <TaskLayout
-              key={i}
+              key={task._id}
               currentTask={task}
               currentList={currentList}
               setLists={setLists}

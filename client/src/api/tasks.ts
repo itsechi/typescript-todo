@@ -37,17 +37,25 @@ export const deleteTaskFromDB = async (id: string) => {
 };
 
 export const editTaskInDB = async (
-  name: string,
   taskId: string,
-  status: boolean,
+  name?: string,
+  status?: boolean,
 ) => {
   try {
+    const bodyData: { [key: string]: string | boolean } = { taskId };
+    if (name !== undefined) {
+      bodyData.name = name;
+    }
+    if (status !== undefined) {
+      bodyData.status = status;
+    }
+
     const res = await fetch(`${import.meta.env.VITE_API_URL}tasks/${taskId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, taskId, status }),
+      body: JSON.stringify(bodyData),
     });
     const json = await res.json();
     return json;

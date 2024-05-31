@@ -1,7 +1,12 @@
 import { useState } from 'react';
 import { addTaskToDB, deleteTaskFromDB, editTaskInDB } from '@/api/tasks';
 import { List, Task } from '@/types';
-import { addTask, deleteTask, updateTask } from '@/helpers/taskHelpers';
+import {
+  addTask,
+  deleteTask,
+  updateTask,
+  updateTaskStatus,
+} from '@/helpers/taskHelpers';
 
 export const useTaskOperations = (
   listId: string,
@@ -22,9 +27,9 @@ export const useTaskOperations = (
   ) => {
     const status = e.target.checked;
     setLists((prevLists) =>
-      updateTask(prevLists, currentTask.name, listId, currentTask._id, status),
+      updateTaskStatus(prevLists, listId, currentTask._id, status),
     );
-    await editTaskInDB(currentTask.name, currentTask._id, status);
+    await editTaskInDB(currentTask._id, undefined, status);
   };
 
   const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +48,7 @@ export const useTaskOperations = (
   };
 
   const handleTaskEdit = async (task: Task) => {
-    await editTaskInDB(task.name, task._id, task.status);
+    await editTaskInDB(task._id, task.name, task.status);
   };
 
   const handleTaskSubmit = async (list: List, task: Task) => {

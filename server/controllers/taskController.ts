@@ -34,11 +34,17 @@ export const deleteTask = async (req: Request, res: Response) => {
 };
 
 export const editTask = async (req: Request, res: Response) => {
+  const { taskId, name, status } = req.body;
+  const updateFields: { [key: string]: string | boolean } = {};
+  if (name !== undefined) {
+    updateFields.name = name;
+  }
+  if (status !== undefined) {
+    updateFields.status = status;
+  }
+
   try {
-    await Task.findByIdAndUpdate(req.body.taskId, {
-      name: req.body.name,
-      status: req.body.status,
-    });
+    await Task.findByIdAndUpdate(taskId, updateFields);
   } catch (err) {
     console.error(`Error editing the task in the DB: ${err}`);
   }

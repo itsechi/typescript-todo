@@ -32,3 +32,21 @@ export const updateTask = (
       : list,
   );
 };
+
+export const updateTaskStatus = (
+  lists: List[],
+  listId: string,
+  taskId: string,
+  status: boolean,
+) => {
+  return lists.map((list) =>
+    list._id === listId
+      ? {
+          ...list,
+          tasks: list.tasks.map((task) =>
+            task._id === taskId ? { ...task, status } : task,
+          ),
+        }
+      : list,
+  );
+};
