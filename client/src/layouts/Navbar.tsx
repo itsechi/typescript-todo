@@ -6,14 +6,11 @@ import {
 import Link from '@/components/Link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { useClickOutside } from '@/hooks/useClickOutside';
-import { User } from '@/types';
+import { useUserStore } from '@/hooks/useContext';
 
-type NavbarProps = {
-  user: User;
-};
-
-const Navbar = ({ user }: NavbarProps) => {
+const Navbar = () => {
   const { ref, isVisible, setIsVisible } = useClickOutside();
+  const { user } = useUserStore();
 
   return (
     <header className="h-[60px] w-full border-b p-4  dark:border-night-border dark:bg-night-nav">

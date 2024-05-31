@@ -7,16 +7,14 @@ import { useTaskOperations } from '@/hooks/useTaskOperations';
 type TaskLayoutProps = {
   currentTask: Task;
   currentList: List;
-  setLists: React.Dispatch<React.SetStateAction<List[]>>;
 };
 
 export const TaskLayout = ({
   currentTask,
   currentList,
-  setLists,
 }: TaskLayoutProps) => {
   const { handleTaskStatusChange, handleTaskEdit, handleTaskDelete } =
-    useTaskOperations(currentList._id, setLists, currentTask);
+    useTaskOperations(currentList._id, currentTask);
 
   const { ref, isVisible, setIsVisible } = useClickOutside(
     () => handleTaskEdit(currentTask),
@@ -30,7 +28,6 @@ export const TaskLayout = ({
           <TaskForm
             currentTask={currentTask}
             currentList={currentList}
-            setLists={setLists}
             setIsVisible={setIsVisible}
           />
         </div>

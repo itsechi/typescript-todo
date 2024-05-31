@@ -1,14 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import { createListInDB, deleteListFromDB, editListInDB } from '@/api/lists';
-import { List, User } from '@/types';
+import { List } from '@/types';
 import { updateList } from '@/helpers/listHelpers';
+import { useListStore, useUserStore } from './useContext';
 
-export const useListOperations = (
-  user: User,
-  setLists: React.Dispatch<React.SetStateAction<List[]>>,
-  existingList?: List,
-) => {
+export const useListOperations = (existingList?: List) => {
   const [currentList, setCurrentList] = useState<List>(
     existingList || {
       _id: '',
@@ -17,6 +14,8 @@ export const useListOperations = (
       tasks: [],
     },
   );
+  const { user } = useUserStore();
+  const { setLists } = useListStore();
 
   const handleListInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentList((prevList) => ({ ...prevList, name: e.target.value }));

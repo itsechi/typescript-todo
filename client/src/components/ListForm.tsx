@@ -1,34 +1,31 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Inputs, List, User } from '@/types';
+import { Inputs, List } from '@/types';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { useListOperations } from '@/hooks/useListOperations';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import { useListStore } from '@/hooks/useContext';
 
 type ListFormProps = {
-  user: User;
-  lists: List[];
-  setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   currentList?: List;
 };
 
 export const ListForm = ({
-  user,
-  lists,
-  setLists,
   setIsVisible,
   currentList: existingList,
 }: ListFormProps) => {
   const [showListInput, setShowListInput] = useState(false);
+  const { lists } = useListStore();
+
   const {
     currentList,
     handleListInputChange,
     handleListSubmit,
     handleListEdit,
     handleReset,
-  } = useListOperations(user, setLists, existingList);
+  } = useListOperations(existingList);
 
   const isEditing = !!existingList;
 

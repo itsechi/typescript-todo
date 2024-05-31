@@ -8,14 +8,12 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 
 type TaskFormProps = {
   currentList: List;
-  setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   currentTask?: Task;
 };
 
 export const TaskForm = ({
   currentList,
-  setLists,
   setIsVisible,
   currentTask: existingTask,
 }: TaskFormProps) => {
@@ -26,7 +24,7 @@ export const TaskForm = ({
     handleTaskSubmit,
     handleTaskEdit,
     handleReset,
-  } = useTaskOperations(currentList._id, setLists, existingTask);
+  } = useTaskOperations(currentList._id, existingTask);
 
   const isEditing = !!existingTask;
 

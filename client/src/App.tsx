@@ -5,12 +5,6 @@ import { logInUser } from './api/user';
 import { User } from './types';
 
 function App() {
-  const [user, setUser] = useState({
-    _id: '6647669b09bfff8ffacf7b9e',
-    googleId: 'abcd',
-    displayName: 'Test',
-  }); // TESTING ONLY
-
   // const [user, setUser] = useState<User | null>(null);
   // useEffect(() => {
   //   const handleLogIn = async () => {
@@ -22,9 +16,8 @@ function App() {
 
   return (
     <>
-      <div className="tpl-visual-object-1"></div>
-      <Navbar user={user} />
-      <Dashboard user={user} />
+      <Navbar />
+      <Dashboard />
     </>
   );
 }

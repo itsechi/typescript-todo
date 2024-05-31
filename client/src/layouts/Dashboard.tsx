@@ -1,16 +1,11 @@
 import { useEffect } from 'react';
 import { getListsFromDB } from '@/api/lists';
-import { List, User } from '@/types';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { ListLayout } from '@/components/ListLayout';
 import { ListForm } from '@/components/ListForm';
+import { useListStore } from '@/hooks/useContext';
 
-type DashboardProps = {
-  user: User;
-};
-
-const Dashboard = ({ user }: DashboardProps) => {
-  const [lists, setLists] = useLocalStorage<List[]>('LISTS', []);
+const Dashboard = () => {
+  const { lists, setLists } = useListStore();
 
   useEffect(() => {
     const fetchLists = async () => {
@@ -30,15 +25,9 @@ const Dashboard = ({ user }: DashboardProps) => {
         <h1 className="mt-4 text-3xl font-bold">Dashboard</h1>
         <div className="grid grid-cols-responsive items-start gap-2">
           {lists.map((list) => (
-            <ListLayout
-              key={list._id}
-              currentList={list}
-              setLists={setLists}
-              lists={lists}
-              user={user}
-            />
+            <ListLayout key={list._id} currentList={list} />
           ))}
-          <ListForm lists={lists} setLists={setLists} user={user} />
+          <ListForm />
         </div>
       </div>
     </main>

@@ -1,5 +1,5 @@
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { List, User } from '@/types';
+import { List } from '@/types';
 import { useListOperations } from '@/hooks/useListOperations';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { TaskLayout } from '@/components/TaskLayout';
@@ -8,22 +8,10 @@ import { ListForm } from './ListForm';
 
 type ListLayoutProps = {
   currentList: List;
-  setLists: React.Dispatch<React.SetStateAction<List[]>>;
-  lists: List[];
-  user: User;
 };
 
-export const ListLayout = ({
-  user,
-  currentList,
-  lists,
-  setLists,
-}: ListLayoutProps) => {
-  const { handleListEdit, handleListDelete } = useListOperations(
-    user,
-    setLists,
-    currentList,
-  );
+export const ListLayout = ({ currentList }: ListLayoutProps) => {
+  const { handleListEdit, handleListDelete } = useListOperations(currentList);
   const { ref, isVisible, setIsVisible } = useClickOutside(
     () => handleListEdit(currentList),
     currentList.name,
@@ -34,13 +22,7 @@ export const ListLayout = ({
       <div className="flex justify-between px-4 pt-3">
         {isVisible ? (
           <div ref={ref as React.RefObject<HTMLDivElement>}>
-            <ListForm
-              user={user}
-              currentList={currentList}
-              setLists={setLists}
-              lists={lists}
-              setIsVisible={setIsVisible}
-            />
+            <ListForm currentList={currentList} setIsVisible={setIsVisible} />
           </div>
         ) : (
           <h3
@@ -61,12 +43,11 @@ export const ListLayout = ({
               key={task._id}
               currentTask={task}
               currentList={currentList}
-              setLists={setLists}
             />
           ))}
         </div>
       )}
-      <TaskForm currentList={currentList} setLists={setLists} />
+      <TaskForm currentList={currentList} />
     </div>
   );
 };

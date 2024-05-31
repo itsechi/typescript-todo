@@ -7,15 +7,13 @@ import {
   updateTask,
   updateTaskStatus,
 } from '@/helpers/taskHelpers';
+import { useListStore } from './useContext';
 
-export const useTaskOperations = (
-  listId: string,
-  setLists: React.Dispatch<React.SetStateAction<List[]>>,
-  existingTask?: Task,
-) => {
+export const useTaskOperations = (listId: string, existingTask?: Task) => {
   const [currentTask, setCurrentTask] = useState<Task>(
     existingTask || { _id: '', name: '', status: false },
   );
+  const { setLists } = useListStore();
 
   const handleTaskDelete = async (taskId: string) => {
     setLists((prevLists) => deleteTask(prevLists, listId, taskId));
