@@ -1,43 +1,31 @@
-import { deleteTaskFromDB, editTaskInDB } from '@/api/tasks';
-import { deleteTask, updateTask } from '@/helpers';
 import { List, Task } from '@/types';
 import { PencilSquareIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { TaskFormEdit } from './TaskFormEdit';
-import { useEditTaskForm } from '@/hooks/useTaskForm';
+import { TaskForm } from './TaskForm';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import { useTaskOperations } from '@/hooks/useTaskOperations';
 
 type TaskLayoutProps = {
-  listId: string;
+  list: List;
   task: Task;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
 };
 
-export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
-  const { ref, isVisible, setIsVisible } = useEditTaskForm(
-    task,
-    listId,
-    setLists,
+export const TaskLayout = ({ task, list, setLists }: TaskLayoutProps) => {
+  const { handleTaskStatusChange, handleTaskEdit, handleTaskDelete } =
+    useTaskOperations(list._id, setLists, task);
+
+  const { ref, isVisible, setIsVisible } = useClickOutside(
+    () => handleTaskEdit(task),
+    task.name,
   );
-
-  const handleTaskDelete = (taskId: string, listId: string) => {
-    deleteTaskFromDB(taskId);
-    setLists((prevLists) => deleteTask(prevLists, listId, taskId));
-  };
-
-  const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const status = e.target.checked;
-    editTaskInDB(task.name, task._id, status);
-    setLists((prevLists) =>
-      updateTask(prevLists, task.name, listId, task._id, status),
-    );
-  };
 
   return (
     <div className="group mt-2 flex items-center justify-between px-4 text-sm">
       {isVisible ? (
         <div ref={ref as React.RefObject<HTMLDivElement>}>
-          <TaskFormEdit
+          <TaskForm
             task={task}
-            listId={listId}
+            list={list}
             setLists={setLists}
             setIsVisible={setIsVisible}
           />
@@ -49,7 +37,7 @@ export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
               className="mr-2 h-4 w-4 rounded border-border-dark bg-hover text-primary focus:ring-primary    dark:border-night-border dark:bg-gray-700 focus:dark:ring-offset-night-bg"
               type="checkbox"
               checked={task.status}
-              onChange={handleStatusChange}
+              onChange={handleTaskStatusChange}
             />
             {task.name}
           </label>
@@ -57,7 +45,7 @@ export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
             <button onClick={() => setIsVisible(!isVisible)}>
               <PencilSquareIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
-            <button onClick={() => handleTaskDelete(task._id, listId)}>
+            <button onClick={() => handleTaskDelete(task._id)}>
               <XMarkIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
           </div>
