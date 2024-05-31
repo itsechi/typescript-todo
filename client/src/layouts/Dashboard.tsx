@@ -3,7 +3,7 @@ import { getListsFromDB } from '@/api/lists';
 import { List, User } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { ListLayout } from '@/components/ListLayout';
-import { AddListForm } from '@/components/AddListForm';
+import { ListFormAdd } from '@/components/ListFormAdd';
 
 type DashboardProps = {
   user: User;
@@ -38,7 +38,7 @@ const Dashboard = ({ user }: DashboardProps) => {
               user={user}
             />
           ))}
-          <AddListForm lists={lists} setLists={setLists} user={user} />
+          <ListFormAdd lists={lists} setLists={setLists} user={user} />
         </div>
       </div>
     </main>

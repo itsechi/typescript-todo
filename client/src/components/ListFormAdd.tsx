@@ -4,13 +4,13 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { Input } from './Input';
 import { List, User } from '@/types';
 
-type AddListFormProps = {
+type ListFormAddProps = {
   lists: List[];
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   user: User;
 };
 
-export const AddListForm = ({ lists, setLists, user }: AddListFormProps) => {
+export const ListFormAdd = ({ lists, setLists, user }: ListFormAddProps) => {
   const {
     list,
     showListInput,

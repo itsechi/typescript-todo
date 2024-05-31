@@ -2,17 +2,17 @@ import { useEditListForm } from '@/hooks/useListForm';
 import { List } from '@/types';
 import { Input } from './Input';
 
-type ListFormProps = {
+type ListFormEditProps = {
   list: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const EditListForm = ({
+export const ListFormEdit = ({
   list,
   setLists,
   setIsVisible,
-}: ListFormProps) => {
+}: ListFormEditProps) => {
   const { handleInputChange, handleListEdit, handleSubmit, errors, register } =
     useEditListForm(list, setLists);
 

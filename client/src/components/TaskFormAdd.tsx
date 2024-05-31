@@ -4,14 +4,14 @@ import { Button } from './Button';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { List, User } from '@/types';
 
-type TaskFormProps = {
+type TaskFormAddProps = {
   list: List;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   lists: List[];
   user: User;
 };
 
-export const AddTaskForm = ({ list, lists, setLists, user }: TaskFormProps) => {
+export const TaskFormAdd = ({ list, lists, setLists, user }: TaskFormAddProps) => {
   const {
     task,
     showTaskInput,

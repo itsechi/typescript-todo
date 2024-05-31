@@ -2,19 +2,19 @@ import { useEditTaskForm } from '@/hooks/useTaskForm';
 import { Input } from './Input';
 import { List, Task } from '@/types';
 
-type EditTaskFormProps = {
+type TaskFormEditProps = {
   task: Task;
   listId: string;
   setLists: React.Dispatch<React.SetStateAction<List[]>>;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const EditTaskForm = ({
+export const TaskFormEdit = ({
   task,
   listId,
   setLists,
   setIsVisible,
-}: EditTaskFormProps) => {
+}: TaskFormEditProps) => {
   const { handleInputChange, handleTaskEdit, handleSubmit, register, errors } =
     useEditTaskForm(task, listId, setLists);
 

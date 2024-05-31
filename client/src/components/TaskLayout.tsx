@@ -2,7 +2,7 @@ import { deleteTaskFromDB, editTaskInDB } from '@/api/tasks';
 import { deleteTask, updateTask } from '@/helpers';
 import { List, Task } from '@/types';
 import { PencilSquareIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { EditTaskForm } from './EditTaskForm';
+import { TaskFormEdit } from './TaskFormEdit';
 import { useEditTaskForm } from '@/hooks/useTaskForm';
 
 type TaskLayoutProps = {
@@ -35,7 +35,7 @@ export const TaskLayout = ({ task, listId, setLists }: TaskLayoutProps) => {
     <div className="group mt-2 flex items-center justify-between px-4 text-sm">
       {isVisible ? (
         <div ref={ref as React.RefObject<HTMLDivElement>}>
-          <EditTaskForm
+          <TaskFormEdit
             task={task}
             listId={listId}
             setLists={setLists}

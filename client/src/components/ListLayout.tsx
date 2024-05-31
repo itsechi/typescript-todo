@@ -2,8 +2,8 @@ import { deleteListFromDB } from '@/api/lists';
 import { TaskLayout } from '@/components/TaskLayout';
 import { List, User } from '@/types';
 import { TrashIcon } from '@heroicons/react/24/outline';
-import { AddTaskForm } from '@/components/AddTaskForm';
-import { EditListForm } from '@/components/EditListForm';
+import { TaskFormAdd } from '@/components/TaskFormAdd';
+import { ListFormEdit } from '@/components/ListFormEdit';
 import { useEditListForm } from '@/hooks/useListForm';
 
 type ListLayoutProps = {
@@ -31,7 +31,7 @@ export const ListLayout = ({
       <div className="flex justify-between px-4 pt-3">
         {isVisible ? (
           <div ref={ref as React.RefObject<HTMLDivElement>}>
-            <EditListForm
+            <ListFormEdit
               list={list}
               setLists={setLists}
               setIsVisible={setIsVisible}
@@ -61,7 +61,7 @@ export const ListLayout = ({
           ))}
         </div>
       )}
-      <AddTaskForm list={list} lists={lists} setLists={setLists} user={user} />
+      <TaskFormAdd list={list} lists={lists} setLists={setLists} user={user} />
     </div>
   );
 };
