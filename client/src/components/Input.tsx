@@ -1,29 +1,21 @@
 import { Path, UseFormRegister } from 'react-hook-form';
 import { Inputs } from '@/types';
 
-type InputProps = {
-  value: string;
-  placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   register: UseFormRegister<Inputs>;
   label: Path<Inputs>;
-};
+}
 
-export const Input = ({
-  value,
-  placeholder,
-  onChange,
-  register,
-  label,
-}: InputProps) => {
+export const Input = ({ register, label, ...props }: InputProps) => {
   return (
     <input
       className="rounded-lg border-border-dark bg-hover px-2 py-1.5 text-sm focus:outline-none focus:ring-primary dark:border-night-border dark:bg-night-hover"
-      type="text"
-      placeholder={placeholder}
-      value={value}
-      {...register(label, { required: true, minLength: 1 })}
-      onChange={onChange}
+      {...register(label, {
+        setValueAs: (value: string) => value.trim(),
+        required: true,
+        minLength: 1,
+      })}
+      {...props}
     />
   );
 };

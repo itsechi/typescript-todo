@@ -1,9 +1,6 @@
-type ButtonProps = {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   styling: string;
-  children: React.ReactNode;
-  type?: 'submit' | 'reset' | 'button' | undefined;
-  onClick?: () => void;
-};
+}
 
 export const Button = ({ children, styling, type, onClick }: ButtonProps) => {
   const variants = {

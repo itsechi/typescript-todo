@@ -42,13 +42,11 @@ export const editTaskInDB = async (
   status?: boolean,
 ) => {
   try {
-    const bodyData: { [key: string]: string | boolean } = { taskId };
-    if (name !== undefined) {
-      bodyData.name = name;
-    }
-    if (status !== undefined) {
-      bodyData.status = status;
-    }
+    const bodyData: { [key: string]: string | boolean | undefined } = {
+      taskId,
+      name: name || undefined,
+      status: status || undefined,
+    };
 
     const res = await fetch(`${import.meta.env.VITE_API_URL}tasks/${taskId}`, {
       method: 'PUT',
