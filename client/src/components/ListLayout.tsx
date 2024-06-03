@@ -32,7 +32,10 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
             {currentList.name}
           </h3>
         )}
-        <button onClick={() => handleListDelete(currentList._id)}>
+        <button
+          className="self-start pl-2"
+          onClick={() => handleListDelete(currentList._id)}
+        >
           <TrashIcon className="h-[20px] w-[20px]" />
         </button>
       </div>

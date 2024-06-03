@@ -52,11 +52,6 @@ export const ListForm = ({
       className="mt-4 flex flex-col gap-2 rounded-md border p-4 dark:border-night-border"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {errors.listName && (
-        <span className="text-red-600">
-          The list name must contain at least one character.
-        </span>
-      )}
       <Input
         value={currentList.name}
         onChange={handleListInputChange}
@@ -64,6 +59,11 @@ export const ListForm = ({
         register={register}
         label="listName"
       />
+      {errors.listName && (
+        <span className="text-error text-sm">
+          The list name must contain at least one character.
+        </span>
+      )}
       <div className="flex gap-2 text-sm">
         <Button type="submit" styling="primary">
           Add List
@@ -82,16 +82,12 @@ export const ListForm = ({
 
   const EditList = (
     <form
+      className="flex flex-col gap-2"
       onSubmit={handleSubmit(() => {
         handleListEdit(currentList);
         setIsVisible!(false);
       })}
     >
-      {errors.listName && (
-        <span className="text-red-600">
-          The list name must contain at least one character.
-        </span>
-      )}
       <Input
         value={currentList.name}
         onChange={handleListInputChange}
@@ -99,6 +95,11 @@ export const ListForm = ({
         register={register}
         label="listName"
       />
+      {errors.listName && (
+        <span className="text-error text-sm">
+          The list name must contain at least one character.
+        </span>
+      )}
     </form>
   );
 

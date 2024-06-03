@@ -15,7 +15,6 @@ export const ListContext = createContext<ListContextType | undefined>(
 export const ListProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  // const [lists, setLists] = useState<List[]>([]);
   const [lists, setLists] = useLocalStorage<List[]>('LISTS', []);
 
   return (

@@ -9,12 +9,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchLists = async () => {
-      try {
-        const response = await getListsFromDB();
-        setLists(response || []);
-      } catch (error) {
-        console.error('Failed to fetch lists:', error);
-      }
+      const response = await getListsFromDB();
+      setLists(response || []);
     };
     fetchLists();
   }, [setLists]);

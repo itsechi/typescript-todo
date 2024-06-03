@@ -1,16 +1,11 @@
-import { User } from '@/types';
+import { apiRequest } from './api';
 
 export const logInUser = async () => {
-  try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}auth/google/callback/success`,
-      {
-        credentials: 'include',
-      },
-    );
-    const data = await res.json();
-    return data as User;
-  } catch (err) {
-    console.error(`Error logging in the user: ${err}`);
-  }
+  const errorMsg = `Failed to log in the user`;
+  const options = { credentials: 'include' } as RequestInit;
+  return await apiRequest(
+    `${import.meta.env.VITE_API_URL}auth/google/callback/success`,
+    errorMsg,
+    options,
+  );
 };

@@ -26,6 +26,7 @@ export default {
 
         // common
         black: '#121316',
+        error: colors.rose[500],
       },
       gridTemplateColumns: {
         responsive: 'repeat(auto-fit, minmax(100px, 300px))',

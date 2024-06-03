@@ -51,11 +51,6 @@ export const TaskForm = ({
       className="flex flex-col gap-2 rounded-md p-4 pt-1 dark:border-night-border"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {errors.taskName && (
-        <span className="text-red-600">
-          The task name must contain at least one character.
-        </span>
-      )}
       <Input
         label="taskName"
         value={currentTask.name}
@@ -63,6 +58,11 @@ export const TaskForm = ({
         placeholder={'Enter the task name'}
         register={register}
       />
+      {errors.taskName && (
+        <span className="text-error text-sm">
+          The task name must contain at least one character.
+        </span>
+      )}
       <div className="flex gap-2 text-sm">
         <Button styling="primary" type="submit">
           Add Task
@@ -81,16 +81,12 @@ export const TaskForm = ({
 
   const EditForm = (
     <form
+      className="flex flex-col gap-2"
       onSubmit={handleSubmit(() => {
         handleTaskEdit(currentTask);
         setIsVisible!(false);
       })}
     >
-      {errors.taskName && (
-        <span className="text-red-600">
-          The task name must contain at least one character.
-        </span>
-      )}
       <Input
         value={currentTask.name}
         label={'taskName'}
@@ -98,6 +94,11 @@ export const TaskForm = ({
         placeholder={'Edit the task name'}
         register={register}
       />
+      {errors.taskName && (
+        <span className="text-error text-sm">
+          The task name must contain at least one character.
+        </span>
+      )}
     </form>
   );
 
