@@ -8,7 +8,7 @@ export function useClickOutside(callback?: () => void, input?: string) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         if (!callback) return setIsVisible(false);
         else {
-          if (input !== undefined && input.length === 0) {
+          if (input !== undefined && input.trim().length === 0) {
             return;
           } else {
             callback();
