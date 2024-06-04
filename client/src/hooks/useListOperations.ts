@@ -27,12 +27,12 @@ export const useListOperations = (existingList?: List) => {
   };
 
   const handleListEdit = async (list: List) => {
-    await editListInDB(list.name, list._id);
+    if (user) await editListInDB(list.name, list._id);
   };
 
   const handleListDelete = async (id: string) => {
     setLists((prevLists) => prevLists.filter((list) => list._id !== id));
-    await deleteListFromDB(id);
+    if (user) await deleteListFromDB(id);
   };
 
   const handleListSubmit = async () => {

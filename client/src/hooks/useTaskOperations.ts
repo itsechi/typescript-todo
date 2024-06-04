@@ -7,17 +7,18 @@ import {
   updateTask,
   updateTaskStatus,
 } from '@/helpers/taskHelpers';
-import { useListStore } from './useContext';
+import { useListStore, useUserStore } from './useContext';
 
 export const useTaskOperations = (listId: string, existingTask?: Task) => {
   const [currentTask, setCurrentTask] = useState<Task>(
     existingTask || { _id: '', name: '', status: false },
   );
+  const { user } = useUserStore();
   const { setLists } = useListStore();
 
   const handleTaskDelete = async (taskId: string) => {
     setLists((prevLists) => deleteTask(prevLists, listId, taskId));
-    await deleteTaskFromDB(taskId);
+    if (user) await deleteTaskFromDB(taskId);
   };
 
   const handleTaskStatusChange = async (
@@ -27,7 +28,7 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
     setLists((prevLists) =>
       updateTaskStatus(prevLists, listId, currentTask._id, status),
     );
-    await editTaskInDB(currentTask._id, undefined, status);
+    if (user) await editTaskInDB(currentTask._id, undefined, status);
   };
 
   const handleTaskInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +47,18 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
   };
 
   const handleTaskEdit = async (task: Task) => {
-    await editTaskInDB(task._id, task.name, task.status);
+    if (user) await editTaskInDB(task._id, task.name, task.status);
   };
 
   const handleTaskSubmit = async (list: List, task: Task) => {
-    const response = await addTaskToDB(list, task);
-    setLists((prevLists) => addTask(prevLists, response, listId));
+    // User logged in
+    if (user) {
+      const response = await addTaskToDB(list, task);
+      setLists((prevLists) => addTask(prevLists, response, listId));
+    } else {
+      // Local storage
+      setLists((prevLists) => addTask(prevLists, task, listId));
+    }
     handleReset();
   };
 

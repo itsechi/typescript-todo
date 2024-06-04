@@ -10,11 +10,11 @@ declare global {
 }
 
 export const getLists = async (req: Request, res: Response) => {
-  // if (!req.user) return;
+  if (!req.user) return;
   try {
-    const id = '6647669b09bfff8ffacf7b9e';
-    const lists = await List.find({ userId: id }).populate('tasks'); // TESTING ONLY
-    // const lists = await List.find({ userId: req.user._id }).populate('tasks');
+    // const id = '6647669b09bfff8ffacf7b9e';
+    // const lists = await List.find({ userId: id }).populate('tasks'); // TESTING ONLY
+    const lists = await List.find({ userId: req.user._id }).populate('tasks');
     res.json(lists);
   } catch (err) {
     console.error(`Error getting the lists from the DB: ${err}`);
