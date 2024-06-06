@@ -10,40 +10,51 @@ export const addTask = async (req: Request, res: Response) => {
       listId: req.body.id,
       status: req.body.status,
     });
-    await List.findByIdAndUpdate(req.body.id, {
-      $push: { tasks: newTask },
-    }).populate('tasks');
     await newTask.save();
-    res.json(newTask);
+
+    await List.findByIdAndUpdate(
+      req.body.id,
+      {
+        $push: { tasks: newTask },
+      },
+      { new: true },
+    ).populate('tasks');
+
+    res.status(201).json(newTask);
   } catch (err) {
     console.error(`Error adding the tasks to the DB: ${err}`);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
-  console.log('task deleting');
   try {
     const task = await Task.findById(req.body.id);
     await List.findByIdAndUpdate(task!.listId, {
       $pull: { tasks: new mongoose.Types.ObjectId(task!._id) },
     });
     await Task.findByIdAndDelete(req.body.id);
+    res.status(204).end();
   } catch (err) {
     console.error(`Error deleting the task from the DB: ${err}`);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 export const editTask = async (req: Request, res: Response) => {
   const { taskId, name, status }: { [key: string]: string | boolean } =
     req.body;
+
   const updateFields = {
     name: name || undefined,
     status: status || undefined,
   };
 
   try {
-    await Task.findByIdAndUpdate(taskId, updateFields);
+    const updatedTask = await Task.findByIdAndUpdate(taskId, updateFields);
+    res.status(200).json(updatedTask);
   } catch (err) {
     console.error(`Error editing the task in the DB: ${err}`);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
