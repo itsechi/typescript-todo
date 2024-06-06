@@ -14,6 +14,8 @@ export const useListOperations = (existingList?: List) => {
       tasks: [],
     },
   );
+  const [originalListName, setOriginalListName] = useState(currentList.name);
+
   const { user } = useUserStore();
   const { setLists } = useListStore();
 
@@ -27,7 +29,7 @@ export const useListOperations = (existingList?: List) => {
   };
 
   const handleListEdit = async (list: List) => {
-    if (user) await editListInDB(list.name, list._id);
+    if (user) await editListInDB(list._id, list.name);
   };
 
   const handleListDelete = async (id: string) => {
@@ -52,9 +54,18 @@ export const useListOperations = (existingList?: List) => {
     handleReset();
   };
 
-  // Done
   const handleReset = () => {
     setCurrentList({ _id: '', name: '', userId: '', tasks: [] });
+    setOriginalListName('');
+  };
+
+  const handleCancel = () => {
+    setCurrentList((prevList) => ({ ...prevList, name: originalListName }));
+    if (existingList) {
+      setLists((prevLists) =>
+        updateList(prevLists, originalListName, currentList._id),
+      );
+    }
   };
 
   return {
@@ -65,5 +76,6 @@ export const useListOperations = (existingList?: List) => {
     handleListDelete,
     handleListSubmit,
     handleReset,
+    handleCancel,
   };
 };

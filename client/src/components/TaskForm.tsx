@@ -3,7 +3,7 @@ import { Task, List, Inputs } from '@/types';
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { useTaskOperations } from '@/hooks/useTaskOperations';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 
 type TaskFormProps = {
@@ -24,6 +24,7 @@ export const TaskForm = ({
     handleTaskSubmit,
     handleTaskEdit,
     handleReset,
+    handleCancel,
   } = useTaskOperations(currentList._id, existingTask);
 
   const isEditing = !!existingTask;
@@ -46,6 +47,17 @@ export const TaskForm = ({
     reset();
   };
 
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (isEditing && e.key === 'Escape') {
+        handleCancel();
+        setIsVisible!(false);
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isEditing, handleCancel, setIsVisible]);
+
   const AddForm = showTaskInput ? (
     <form
       className="flex flex-col gap-2 rounded-md p-4 pt-1 dark:border-night-border"
@@ -59,7 +71,7 @@ export const TaskForm = ({
         register={register}
       />
       {errors.taskName && (
-        <span className="text-error text-sm">
+        <span className="text-sm text-error">
           The task name must contain at least one character.
         </span>
       )}
@@ -95,7 +107,7 @@ export const TaskForm = ({
         register={register}
       />
       {errors.taskName && (
-        <span className="text-error text-sm">
+        <span className="text-sm text-error">
           The task name must contain at least one character.
         </span>
       )}

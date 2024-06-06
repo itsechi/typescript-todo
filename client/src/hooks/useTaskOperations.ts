@@ -13,6 +13,7 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
   const [currentTask, setCurrentTask] = useState<Task>(
     existingTask || { _id: '', name: '', status: false },
   );
+  const [originalTaskName, setOriginalTaskName] = useState(currentTask.name);
   const { user } = useUserStore();
   const { setLists } = useListStore();
 
@@ -64,6 +65,20 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
 
   const handleReset = () => {
     setCurrentTask({ _id: '', name: '', status: false });
+    setOriginalTaskName('');
+  };
+
+  const handleCancel = () => {
+    setCurrentTask((prevTask) => ({ ...prevTask, name: originalTaskName }));
+    setLists((prevLists: List[]) =>
+      updateTask(
+        prevLists,
+        originalTaskName,
+        listId,
+        currentTask._id,
+        currentTask.status,
+      ),
+    );
   };
 
   return {
@@ -74,5 +89,6 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
     handleTaskEdit,
     handleTaskSubmit,
     handleReset,
+    handleCancel,
   };
 };
