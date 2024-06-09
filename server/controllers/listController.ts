@@ -40,7 +40,7 @@ export const newList = async (req: Request, res: Response) => {
 export const deleteList = async (req: Request, res: Response) => {
   try {
     await List.findByIdAndDelete(req.body.id);
-    res.status(204).end();
+    // res.status(204).end();
   } catch (err) {
     console.error(`Error deleting the list from the DB: ${err}`);
     res.status(500).json({ error: 'Internal Server Error' });

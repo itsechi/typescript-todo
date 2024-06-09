@@ -1,11 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Inputs, List } from '@/types';
 import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
 import { useListOperations } from '@/hooks/useListOperations';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useListStore } from '@/hooks/useContext';
+import { InputController } from './InputController';
 
 type ListFormProps = {
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -31,11 +31,11 @@ export const ListForm = ({
   const isEditing = !!existingList;
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>({ mode: isEditing ? 'onBlur' : 'onSubmit' });
+  } = useForm<Inputs>({ mode: 'onChange' });
 
   const onSubmit: SubmitHandler<Inputs> = () => {
     handleListSubmit();
@@ -64,12 +64,12 @@ export const ListForm = ({
       className="mt-4 flex flex-col gap-2 rounded-md border p-4 dark:border-night-border"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input
-        value={currentList.name}
+      <InputController
+        name="listName"
+        control={control}
         onChange={handleListInputChange}
-        placeholder="Enter the list name"
-        register={register}
-        label="listName"
+        placeholder={'Enter the list name'}
+        value={currentList.name}
       />
       {errors.listName && (
         <span className="text-sm text-error">
@@ -100,12 +100,12 @@ export const ListForm = ({
         setIsVisible!(false);
       })}
     >
-      <Input
-        value={currentList.name}
+      <InputController
+        name="listName"
+        control={control}
         onChange={handleListInputChange}
         placeholder={'Edit the list name'}
-        register={register}
-        label="listName"
+        value={currentList.name}
       />
       {errors.listName && (
         <span className="text-sm text-error">

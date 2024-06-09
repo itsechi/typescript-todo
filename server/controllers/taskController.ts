@@ -34,7 +34,7 @@ export const deleteTask = async (req: Request, res: Response) => {
       $pull: { tasks: new mongoose.Types.ObjectId(task!._id) },
     });
     await Task.findByIdAndDelete(req.body.id);
-    res.status(204).end();
+    // res.status(204).end();
   } catch (err) {
     console.error(`Error deleting the task from the DB: ${err}`);
     res.status(500).json({ error: 'Internal Server Error' });

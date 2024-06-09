@@ -1,10 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Task, List, Inputs } from '@/types';
 import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
 import { useTaskOperations } from '@/hooks/useTaskOperations';
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { InputController } from './InputController';
 
 type TaskFormProps = {
   currentList: List;
@@ -30,11 +30,11 @@ export const TaskForm = ({
   const isEditing = !!existingTask;
 
   const {
-    register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Inputs>({ mode: isEditing ? 'onBlur' : 'onSubmit' });
+    control,
+  } = useForm<Inputs>({ mode: 'onChange' });
 
   const onSubmit: SubmitHandler<Inputs> = () => {
     handleTaskSubmit(currentList, currentTask);
@@ -63,12 +63,12 @@ export const TaskForm = ({
       className="flex flex-col gap-2 rounded-md p-4 pt-1 dark:border-night-border"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input
-        label="taskName"
-        value={currentTask.name}
+      <InputController
+        name="taskName"
+        control={control}
         onChange={handleTaskInputChange}
         placeholder={'Enter the task name'}
-        register={register}
+        value={currentTask.name}
       />
       {errors.taskName && (
         <span className="text-sm text-error">
@@ -99,12 +99,12 @@ export const TaskForm = ({
         setIsVisible!(false);
       })}
     >
-      <Input
-        value={currentTask.name}
-        label={'taskName'}
+      <InputController
+        name="taskName"
+        control={control}
         onChange={handleTaskInputChange}
+        value={currentTask.name}
         placeholder={'Edit the task name'}
-        register={register}
       />
       {errors.taskName && (
         <span className="text-sm text-error">

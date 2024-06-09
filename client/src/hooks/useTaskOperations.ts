@@ -50,6 +50,7 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
 
   const handleTaskEdit = async (task: Task) => {
     if (user) await editTaskInDB(task._id, task.name, task.status);
+    // if (task.name.trim().length === 0) handleCancel();
   };
 
   const handleTaskSubmit = async (list: List, task: Task) => {
