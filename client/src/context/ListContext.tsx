@@ -1,4 +1,3 @@
-// context/ListContext.tsx
 import React, { ReactNode, createContext } from 'react';
 import { List } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';

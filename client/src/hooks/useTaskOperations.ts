@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import { addTaskToDB, deleteTaskFromDB, editTaskInDB } from '@/api/tasks';
 import { List, Task } from '@/types';
@@ -52,13 +53,17 @@ export const useTaskOperations = (listId: string, existingTask?: Task) => {
   };
 
   const handleTaskSubmit = async (list: List, task: Task) => {
+    const newTask = {
+      ...task,
+      _id: user ? '' : uuidv4(),
+    };
     // User logged in
     if (user) {
-      const response = await addTaskToDB(list, task);
+      const response = await addTaskToDB(list, newTask);
       setLists((prevLists) => addTask(prevLists, response, listId));
     } else {
       // Local storage
-      setLists((prevLists) => addTask(prevLists, task, listId));
+      setLists((prevLists) => addTask(prevLists, newTask, listId));
     }
     handleReset();
   };
