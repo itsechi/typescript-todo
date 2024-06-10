@@ -25,7 +25,7 @@ export const InputController = ({
       }}
       render={({ field }) => (
         <input
-          className="rounded-lg border-border-dark bg-hover px-2 py-1.5 text-sm focus:outline-none focus:ring-primary dark:border-night-border dark:bg-night-hover"
+          className="w-full rounded-lg border-border-dark bg-hover px-2 py-1.5 text-sm focus:outline-none focus:ring-primary dark:border-night-border dark:bg-night-hover"
           onChange={(e) => {
             onChange(e);
             field.onChange(e);

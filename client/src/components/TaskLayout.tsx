@@ -9,10 +9,7 @@ type TaskLayoutProps = {
   currentList: List;
 };
 
-export const TaskLayout = ({
-  currentTask,
-  currentList,
-}: TaskLayoutProps) => {
+export const TaskLayout = ({ currentTask, currentList }: TaskLayoutProps) => {
   const { handleTaskStatusChange, handleTaskEdit, handleTaskDelete } =
     useTaskOperations(currentList._id, currentTask);
 
@@ -22,9 +19,9 @@ export const TaskLayout = ({
   );
 
   return (
-    <div className="group mt-2 flex items-center justify-between px-4 text-sm">
+    <div className="group mt-2 flex w-full items-center justify-between px-4 text-sm">
       {isVisible ? (
-        <div ref={ref as React.RefObject<HTMLDivElement>}>
+        <div className="w-full" ref={ref as React.RefObject<HTMLDivElement>}>
           <TaskForm
             currentTask={currentTask}
             currentList={currentList}
@@ -32,17 +29,19 @@ export const TaskLayout = ({
           />
         </div>
       ) : (
-        <>
-          <label className="flex items-center">
+        <div className="flex w-full justify-between">
+          <label className="flex w-3/4 items-center">
             <input
               className="mr-2 h-4 w-4 rounded border-border-dark bg-hover text-primary focus:ring-primary    dark:border-night-border dark:bg-gray-700 focus:dark:ring-offset-night-bg"
               type="checkbox"
               checked={currentTask.status}
               onChange={handleTaskStatusChange}
             />
-            {currentTask.name}
+            <span className="w-3/4 overflow-hidden text-ellipsis whitespace-nowrap">
+              {currentTask.name}
+            </span>
           </label>
-          <div>
+          <div className="flex">
             <button onClick={() => setIsVisible(!isVisible)}>
               <PencilSquareIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
@@ -50,7 +49,7 @@ export const TaskLayout = ({
               <XMarkIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
