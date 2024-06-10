@@ -59,6 +59,15 @@ export const ListForm = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isEditing, handleCancel, setIsVisible]);
 
+  // This reverts the input to the original value if the user edits the list and leaves
+  // the field empty but does not submit it, just refreshes the page
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleCancel);
+    return () => {
+      window.removeEventListener('beforeunload', handleCancel);
+    };
+  }, [handleCancel]);
+
   const AddList = showListInput ? (
     <form
       className="mt-4 flex flex-col gap-2 rounded-md border p-4 dark:border-night-border"

@@ -58,6 +58,15 @@ export const TaskForm = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isEditing, handleCancel, setIsVisible]);
 
+  // This reverts the input to the original value if the user edits the task and leaves
+  // the field empty but does not submit it, just refreshes the page
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleCancel);
+    return () => {
+      window.removeEventListener('beforeunload', handleCancel);
+    };
+  }, [handleCancel]);
+
   const AddForm = showTaskInput ? (
     <form
       className="flex flex-col gap-2 rounded-md p-4 pt-1 dark:border-night-border"

@@ -30,7 +30,6 @@ export const InputController = ({
             onChange(e);
             field.onChange(e);
           }}
-          onBlur={() => console.log('hi')}
           {...props}
         />
       )}
