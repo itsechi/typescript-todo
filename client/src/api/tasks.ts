@@ -15,7 +15,7 @@ export const addTaskToDB = async (list: List, task: Task): Promise<Task> => {
     }),
   };
   return await apiRequest(
-    `${import.meta.env.VITE_API_URL}tasks`,
+    `${import.meta.env.VITE_API_URL}api/tasks`,
     errorMsg,
     options,
   );
@@ -31,7 +31,7 @@ export const deleteTaskFromDB = async (id: string): Promise<void> => {
     body: JSON.stringify({ id }),
   };
   return await apiRequest(
-    `${import.meta.env.VITE_API_URL}tasks/${id}`,
+    `${import.meta.env.VITE_API_URL}api/tasks/${id}`,
     errorMsg,
     options,
   );
@@ -56,7 +56,7 @@ export const editTaskInDB = async (
     body: JSON.stringify(bodyData),
   };
   return await apiRequest(
-    `${import.meta.env.VITE_API_URL}tasks/${taskId}`,
+    `${import.meta.env.VITE_API_URL}api/tasks/${taskId}`,
     errorMsg,
     options,
   );

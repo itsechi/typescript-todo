@@ -20,11 +20,23 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
 
   const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
-    const handleLogIn = async () => {
-      const response = (await logInUser()) || null;
-      setUser(response);
-    };
-    handleLogIn();
+    // Get token from URL if present
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    if (token) {
+      localStorage.setItem('token', token);
+      window.location.href = window.location.origin; // Clean the URL
+    }
+
+    // Fetch user data with token
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      const handleLogIn = async () => {
+        const response = await logInUser(storedToken);
+        setUser(response);
+      };
+      handleLogIn();
+    }
   }, []);
 
   return (

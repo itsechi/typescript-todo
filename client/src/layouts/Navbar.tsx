@@ -36,7 +36,7 @@ const Navbar = () => {
               {isVisible && <Dropdown />}
             </div>
           ) : (
-            <Link href={`${import.meta.env.VITE_API_URL}auth/google`}>
+            <Link href={`${import.meta.env.VITE_API_URL}api/auth/google`}>
               <span className="text-black dark:text-white">Log In</span>
             </Link>
           )}
@@ -71,8 +71,13 @@ const Dropdown = () => {
           Edit profile
         </DropdownItem>
 
-        <div onClick={() => localStorage.removeItem('LISTS')}>
-          <DropdownItem href={`${import.meta.env.VITE_API_URL}loggedOut`}>
+        <div
+          onClick={() => {
+            localStorage.removeItem('token');
+            localStorage.removeItem('LISTS');
+          }}
+        >
+          <DropdownItem href={`${import.meta.env.VITE_API_URL}api/logout`}>
             <LogOutIcon className="h-6 w-6" />
             Log out
           </DropdownItem>

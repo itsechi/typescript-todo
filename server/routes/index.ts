@@ -9,13 +9,13 @@ import {
 import { addTask, deleteTask, editTask } from '../controllers/taskController';
 
 // Home
-router.get('/', getLists);
-router.post('/lists', newList);
-router.delete('/lists/:listId', deleteList);
-router.put('/lists/:listId', editList);
+router.get('/api', getLists);
+router.post('/api/lists', newList);
+router.delete('/api/lists/:listId', deleteList);
+router.put('/api/lists/:listId', editList);
 
-router.put('/tasks', addTask);
-router.delete('/tasks/:taskId', deleteTask);
-router.put('/tasks/:taskId', editTask);
+router.put('/api/tasks', addTask);
+router.delete('/api/tasks/:taskId', deleteTask);
+router.put('/api/tasks/:taskId', editTask);
 
 export default router;

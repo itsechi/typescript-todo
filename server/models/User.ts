@@ -1,4 +1,9 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
+
+export interface IUser extends Document {
+  googleId: string;
+  displayName: string;
+}
 
 const UserSchema = new Schema({
   googleId: {
@@ -11,4 +16,4 @@ const UserSchema = new Schema({
   },
 });
 
-export default model('User', UserSchema);
+export default model<IUser>('User', UserSchema);

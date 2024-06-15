@@ -1,10 +1,10 @@
 import { apiRequest } from './api';
 
-export const logInUser = async () => {
+export const logInUser = async (storedToken) => {
   const errorMsg = `Failed to log in the user`;
-  const options = { credentials: 'include' } as RequestInit;
+  const options = { headers: { Authorization: `Bearer ${storedToken}` } };
   return await apiRequest(
-    `${import.meta.env.VITE_API_URL}auth/google/callback/success`,
+    `${import.meta.env.VITE_API_URL}api/user`,
     errorMsg,
     options,
   );

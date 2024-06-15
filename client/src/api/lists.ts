@@ -4,7 +4,11 @@ import { apiRequest } from './api';
 export const getListsFromDB = async (): Promise<List[]> => {
   const errorMsg = `Failed to fetch lists from the DB`;
   const options = { credentials: 'include' } as RequestInit;
-  return await apiRequest(`${import.meta.env.VITE_API_URL}`, errorMsg, options);
+  return await apiRequest(
+    `${import.meta.env.VITE_API_URL}api`,
+    errorMsg,
+    options,
+  );
 };
 
 export const createListInDB = async (list: List): Promise<List> => {
@@ -22,7 +26,7 @@ export const createListInDB = async (list: List): Promise<List> => {
     }),
   };
   return await apiRequest(
-    `${import.meta.env.VITE_API_URL}lists`,
+    `${import.meta.env.VITE_API_URL}api/lists`,
     errorMsg,
     options,
   );
@@ -38,7 +42,7 @@ export const deleteListFromDB = async (id: string): Promise<void> => {
     body: JSON.stringify({ id }),
   };
   await apiRequest(
-    `${import.meta.env.VITE_API_URL}lists/${id}`,
+    `${import.meta.env.VITE_API_URL}api/lists/${id}`,
     errorMsg,
     options,
   );
@@ -54,7 +58,7 @@ export const editListInDB = async (id: string, name: string): Promise<List> => {
     body: JSON.stringify({ name, id }),
   };
   return await apiRequest(
-    `${import.meta.env.VITE_API_URL}lists/${id}`,
+    `${import.meta.env.VITE_API_URL}api/lists/${id}`,
     errorMsg,
     options,
   );
