@@ -14,7 +14,9 @@ authRouter.get(
 
 authRouter.get(
   '/api/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: process.env.CLIENT_URL }),
+  passport.authenticate('google', {
+    failureRedirect: `${process.env.CLIENT_URL}/typescript-todo`,
+  }),
   (req: Request, res: Response) => {
     const user = req.user as IUser;
     const token = jwt.sign(
@@ -28,7 +30,7 @@ authRouter.get(
         expiresIn: '1h',
       },
     );
-    res.redirect(`${process.env.CLIENT_URL}?token=${token}`);
+    res.redirect(`${process.env.CLIENT_URL}/typescript-todo?token=${token}`);
   },
 );
 
@@ -49,7 +51,7 @@ authRouter.get('/api/user', (req: Request, res: Response) => {
 authRouter.get('/api/logout', (req: Request, res: Response) => {
   req.logout((err) => {
     if (err) console.error(`Error logging out the user: ${err}`);
-    res.redirect(process.env.CLIENT_URL!);
+    res.redirect(`${process.env.CLIENT_URL}/typescript-todo`);
   });
 });
 

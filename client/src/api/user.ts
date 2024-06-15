@@ -1,6 +1,6 @@
 import { apiRequest } from './api';
 
-export const logInUser = async (storedToken) => {
+export const logInUser = async (storedToken: string) => {
   const errorMsg = `Failed to log in the user`;
   const options = { headers: { Authorization: `Bearer ${storedToken}` } };
   return await apiRequest(

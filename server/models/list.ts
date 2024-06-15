@@ -21,7 +21,7 @@ ListSchema.pre('findOneAndDelete', async function (next) {
     next();
   } catch (err) {
     console.error(
-      `Error deleting all of the tasks attached to the list: ${err}`,
+      `Error deleting all of the tasks attached to this list: ${err}`,
     );
   }
 });
