@@ -3,6 +3,7 @@ const authRouter = express.Router();
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import { IUser } from '../models/User';
+import { authenticateJWT } from '../middleware/authMiddleware';
 
 // Google auth
 authRouter.get(
@@ -34,25 +35,23 @@ authRouter.get(
   },
 );
 
-authRouter.get('/api/user', (req: Request, res: Response) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
+authRouter.get('/api/user', authenticateJWT, (req: Request, res: Response) => {
+  const user = req.user;
+  if (!user) {
+    return res.status(401).json({ error: 'Unauthorized' });
   }
-
-  jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Token is invalid or expired' });
-    }
-    res.json(decoded);
-  });
+  res.json(user);
 });
 
-authRouter.get('/api/logout', (req: Request, res: Response) => {
-  req.logout((err) => {
-    if (err) console.error(`Error logging out the user: ${err}`);
-    res.redirect(`${process.env.CLIENT_URL}/typescript-todo`);
-  });
-});
+authRouter.get(
+  '/api/logout',
+  authenticateJWT,
+  (req: Request, res: Response) => {
+    req.logout((err) => {
+      if (err) console.error(`Error logging out the user: ${err}`);
+      res.redirect(`${process.env.CLIENT_URL}/typescript-todo`);
+    });
+  },
+);
 
 export default authRouter;
