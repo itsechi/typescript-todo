@@ -2,18 +2,19 @@ import { useEffect } from 'react';
 import { getListsFromDB } from '@/api/lists';
 import { ListLayout } from '@/components/ListLayout';
 import { ListForm } from '@/components/ListForm';
-import { useListStore } from '@/hooks/useContext';
+import { useListStore, useUserStore } from '@/hooks/useContext';
 
 const Dashboard = () => {
   const { lists, setLists } = useListStore();
+  const { user } = useUserStore();
 
   useEffect(() => {
     const fetchLists = async () => {
       const response = await getListsFromDB();
       setLists(response || []);
     };
-    fetchLists();
-  }, [setLists]);
+    if (user) fetchLists();
+  }, [setLists, user]);
 
   return (
     <main className="h-[calc(100vh-60px)] p-4 text-black dark:bg-night-bg dark:text-white">

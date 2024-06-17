@@ -1,12 +1,15 @@
 import { List, Task } from '@/types';
 import { apiRequest } from './api';
 
+const token = localStorage.getItem('token');
+
 export const addTaskToDB = async (list: List, task: Task): Promise<Task> => {
   const errorMsg = `Failed to add the task to the DB`;
   const options = {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       id: list._id,
@@ -27,6 +30,7 @@ export const deleteTaskFromDB = async (id: string): Promise<void> => {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ id }),
   };
@@ -52,6 +56,7 @@ export const editTaskInDB = async (
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(bodyData),
   };

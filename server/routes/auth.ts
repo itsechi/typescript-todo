@@ -43,15 +43,11 @@ authRouter.get('/api/user', authenticateJWT, (req: Request, res: Response) => {
   res.json(user);
 });
 
-authRouter.get(
-  '/api/logout',
-  authenticateJWT,
-  (req: Request, res: Response) => {
-    req.logout((err) => {
-      if (err) console.error(`Error logging out the user: ${err}`);
-      res.redirect(`${process.env.CLIENT_URL}/typescript-todo`);
-    });
-  },
-);
+authRouter.get('/api/logout', (req: Request, res: Response) => {
+  req.logout((err) => {
+    if (err) console.error(`Error logging out the user: ${err}`);
+    res.redirect(`${process.env.CLIENT_URL}/typescript-todo`);
+  });
+});
 
 export default authRouter;
