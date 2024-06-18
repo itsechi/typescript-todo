@@ -6,7 +6,7 @@ import {
 import Link from '@/components/Link';
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { useClickOutside } from '@/hooks/useClickOutside';
-import { useUserStore } from '@/hooks/useContext';
+import { useListStore, useUserStore } from '@/hooks/useContext';
 
 const Navbar = () => {
   const { ref, isVisible, setIsVisible } = useClickOutside();
@@ -49,14 +49,23 @@ const Navbar = () => {
 const Dropdown = () => {
   type DropdownProps = {
     children: React.ReactNode;
-    href: string;
+    href?: string;
+    onClick?: () => void;
   };
 
-  const DropdownItem = ({ children, href }: DropdownProps) => (
+  const { setLists } = useListStore();
+  const handleLogout = () => {
+    setLists([]);
+    localStorage.removeItem('token');
+    window.location.href = `${import.meta.env.VITE_API_URL}api/logout`;
+  };
+
+  const DropdownItem = ({ children, href, onClick }: DropdownProps) => (
     <li className="first:border-b hover:bg-hover dark:border-night-border dark:hover:bg-night-hover">
       <a
         className="flex gap-2 px-3 py-3 font-semibold dark:text-night-gray-text"
         href={href}
+        onClick={onClick}
       >
         {children}
       </a>
@@ -64,24 +73,17 @@ const Dropdown = () => {
   );
 
   return (
-    <div className="top-100 absolute right-0 min-w-[150px] rounded-md border bg-white shadow-sm dark:border-night-border dark:bg-night-nav">
+    <div className="top-100 absolute right-0 min-w-[150px] cursor-pointer rounded-md border bg-white shadow-sm dark:border-night-border dark:bg-night-nav">
       <ul>
         <DropdownItem href="/">
           <UserIcon className="h-6 w-6" />
           Edit profile
         </DropdownItem>
 
-        <div
-          onClick={() => {
-            localStorage.removeItem('token');
-            localStorage.removeItem('LISTS');
-          }}
-        >
-          <DropdownItem href={`${import.meta.env.VITE_API_URL}api/logout`}>
-            <LogOutIcon className="h-6 w-6" />
-            Log out
-          </DropdownItem>
-        </div>
+        <DropdownItem onClick={handleLogout}>
+          <LogOutIcon className="h-6 w-6" />
+          Log out
+        </DropdownItem>
       </ul>
     </div>
   );

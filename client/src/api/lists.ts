@@ -14,7 +14,6 @@ export const getListsFromDB = async (): Promise<List[]> => {
 };
 
 export const createListInDB = async (list: List): Promise<List> => {
-  console.log(list);
   const errorMsg = `Failed to create the list in the DB`;
   const options = {
     method: 'POST',
