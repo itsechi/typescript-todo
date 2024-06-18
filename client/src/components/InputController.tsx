@@ -18,6 +18,7 @@ export const InputController = ({
     <Controller
       name={name}
       control={control}
+      defaultValue={props.value as string | undefined}
       rules={{
         required: true,
         minLength: 1,
