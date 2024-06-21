@@ -5,6 +5,7 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 import { TaskLayout } from '@/components/TaskLayout';
 import { TaskForm } from './TaskForm';
 import { ListForm } from './ListForm';
+import { useCallback, useEffect, useState } from 'react';
 
 type ListLayoutProps = {
   currentList: List;
@@ -16,6 +17,20 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
     () => handleListEdit(currentList),
     currentList.name,
   );
+  const [progress, setProgress] = useState(0);
+  const changeProgress = useCallback(() => {
+    const allTasks = currentList.tasks.length;
+    const finishedTasks = currentList.tasks.filter(
+      (task) => task.status === true,
+    ).length;
+    let width = (finishedTasks / allTasks) * 100;
+    if (width === Infinity || isNaN(width)) width = 0;
+    setProgress(width);
+  }, [currentList.tasks]);
+
+  useEffect(() => {
+    changeProgress();
+  }, [currentList.tasks, changeProgress]);
 
   return (
     <div className="relative mt-4 flex flex-col gap-2 rounded-md border dark:border-night-border">
@@ -49,11 +64,18 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
               key={task._id}
               currentTask={task}
               currentList={currentList}
+              changeProgress={changeProgress}
             />
           ))}
         </div>
       )}
       <TaskForm currentList={currentList} />
+      <div className="h-1 w-full bg-border dark:bg-night-border">
+        <div
+          className={`h-1 bg-primary transition-all`}
+          style={{ width: `${progress}%` }}
+        ></div>
+      </div>
     </div>
   );
 };

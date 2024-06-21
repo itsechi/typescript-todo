@@ -7,9 +7,14 @@ import { useTaskOperations } from '@/hooks/useTaskOperations';
 type TaskLayoutProps = {
   currentTask: Task;
   currentList: List;
+  changeProgress: () => void;
 };
 
-export const TaskLayout = ({ currentTask, currentList }: TaskLayoutProps) => {
+export const TaskLayout = ({
+  currentTask,
+  currentList,
+  changeProgress,
+}: TaskLayoutProps) => {
   const { handleTaskStatusChange, handleTaskEdit, handleTaskDelete } =
     useTaskOperations(currentList._id, currentTask);
 
@@ -36,6 +41,7 @@ export const TaskLayout = ({ currentTask, currentList }: TaskLayoutProps) => {
               type="checkbox"
               checked={currentTask.status}
               onChange={handleTaskStatusChange}
+              onClick={changeProgress}
             />
             <span className="w-3/4 overflow-hidden text-ellipsis whitespace-nowrap">
               {currentTask.name}
