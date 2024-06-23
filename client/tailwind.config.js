@@ -11,6 +11,7 @@ export default {
         // day-mode
         primary: colors.indigo[600],
         border: colors.gray[200],
+        bg: colors.gray[50],
         hover: colors.gray[100],
         'hover-primary': colors.indigo[700],
         'gray-text': colors.gray[500],
@@ -18,10 +19,10 @@ export default {
 
         // night-mode
         'night-primary': colors.indigo[400],
-        'night-bg': '#16171B',
-        'night-border': colors.gray[800],
-        'night-nav': '#121316',
-        'night-hover': '#1C1E22',
+        'night-border': '#202022',
+        'night-nav': '#19191a',
+        'night-bg': '#0f0f10',
+        'night-hover': '#252527',
         'night-gray-text': colors.gray[300],
 
         // common

@@ -70,7 +70,7 @@ export const ListForm = ({
 
   const AddList = showListInput ? (
     <form
-      className="mt-4 flex flex-col gap-2 rounded-md border p-4 dark:border-night-border"
+      className="mt-4 flex flex-col gap-2 rounded-md border bg-white p-4 dark:border-night-border dark:bg-night-nav"
       onSubmit={handleSubmit(onSubmit)}
     >
       <InputController

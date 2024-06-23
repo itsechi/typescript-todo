@@ -33,7 +33,7 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
   }, [currentList.tasks, changeProgress]);
 
   return (
-    <div className="relative mt-4 flex flex-col gap-2 rounded-md border dark:border-night-border">
+    <div className="relative mt-4 flex flex-col gap-2 rounded-md border bg-white dark:border-night-border dark:bg-night-nav">
       {isVisible ? (
         <div
           className="w-full px-4 pt-3"

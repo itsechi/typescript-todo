@@ -17,9 +17,9 @@ const Dashboard = () => {
   }, [setLists, user]);
 
   return (
-    <main className="h-[calc(100vh-60px)] p-4 text-black dark:bg-night-bg dark:text-white">
+    <main className="bg-bg h-[calc(100vh-60px)] p-4 text-black dark:bg-night-bg dark:text-white">
       <div className="mx-auto max-w-screen-2xl">
-        <h1 className="mt-4 text-3xl font-bold">Dashboard</h1>
+        <h1 className="mt-4 text-2xl font-semibold">All tasks</h1>
         <div className="grid grid-cols-responsive items-start gap-2">
           {lists.map((list) => (
             <ListLayout key={list._id} currentList={list} />

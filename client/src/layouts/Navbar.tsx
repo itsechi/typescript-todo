@@ -13,7 +13,7 @@ const Navbar = () => {
   const { user } = useUserStore();
 
   return (
-    <header className="h-[60px] w-full border-b p-4  dark:border-night-border dark:bg-night-nav">
+    <header className="h-[60px] w-full border-b p-4 dark:border-night-border dark:bg-night-nav">
       <div className="mx-auto flex max-w-screen-2xl justify-between">
         <div className="flex items-center gap-1 text-primary dark:text-night-primary">
           <CheckBadgeIcon className="h-6 w-6" />
