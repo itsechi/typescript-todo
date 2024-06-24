@@ -16,7 +16,7 @@ const Navbar = () => {
     <header className="dark:border-night-gray-200 dark:bg-night-gray-900 h-[60px] w-full border-b p-4">
       <div className="mx-auto flex max-w-screen-2xl justify-between">
         <div className="flex items-center gap-1 text-black  dark:text-white">
-          <CheckBadgeIcon className="h-[30px] w-[30px] text-primary dark:text-night-primary" />
+          <CheckBadgeIcon className="h-[28px] w-[28px] text-primary dark:text-night-primary" />
           <p className="text-md bg-gradient-to-r from-primary to-[#009FD4] bg-clip-text font-bold text-transparent  dark:from-night-primary dark:to-[#009FD4]">
             todolist{' '}
           </p>
