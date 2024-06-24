@@ -18,7 +18,7 @@ export default {
         'border-dark': colors.gray[300],
 
         // night-mode
-        'night-primary': colors.indigo[400],
+        'night-primary': '#6359ff',
         'night-border': '#202022',
         'night-nav': '#19191a',
         'night-bg': '#0f0f10',

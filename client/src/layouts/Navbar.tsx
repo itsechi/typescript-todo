@@ -15,9 +15,11 @@ const Navbar = () => {
   return (
     <header className="h-[60px] w-full border-b p-4 dark:border-night-border dark:bg-night-nav">
       <div className="mx-auto flex max-w-screen-2xl justify-between">
-        <div className="flex items-center gap-1 text-primary dark:text-night-primary">
-          <CheckBadgeIcon className="h-6 w-6" />
-          <p className="text-lg font-bold">todolist</p>
+        <div className="flex items-center gap-1 text-black  dark:text-white">
+          <CheckBadgeIcon className="h-[30px] w-[30px] text-primary dark:text-night-primary" />
+          <p className="text-md bg-gradient-to-r from-primary to-[#009FD4] bg-clip-text font-bold text-transparent  dark:from-night-primary dark:to-[#009FD4]">
+            todolist{' '}
+          </p>
         </div>
         <nav className="flex items-center gap-2 dark:text-white">
           <ThemeSwitcher />
@@ -26,7 +28,6 @@ const Navbar = () => {
               ref={ref as React.RefObject<HTMLDivElement>}
               className="relative"
             >
-              {' '}
               <button
                 className="font-semibold underline underline-offset-2 "
                 onClick={() => setIsVisible(!isVisible)}

@@ -7,12 +7,14 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { InputController } from './InputController';
 
 type TaskFormProps = {
+  color?: string;
   currentList: List;
   setIsVisible?: React.Dispatch<React.SetStateAction<boolean>>;
   currentTask?: Task;
 };
 
 export const TaskForm = ({
+  color,
   currentList,
   setIsVisible,
   currentTask: existingTask,
@@ -85,7 +87,7 @@ export const TaskForm = ({
         </span>
       )}
       <div className="flex gap-2 text-sm">
-        <Button styling="primary" type="submit">
+        <Button styling="primary" type="submit" color={color}>
           Add Task
         </Button>
         <Button styling="secondary" type="button" onClick={resetForm}>

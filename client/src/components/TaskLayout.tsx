@@ -5,12 +5,14 @@ import { useClickOutside } from '@/hooks/useClickOutside';
 import { useTaskOperations } from '@/hooks/useTaskOperations';
 
 type TaskLayoutProps = {
+  color: string;
   currentTask: Task;
   currentList: List;
   changeProgress: () => void;
 };
 
 export const TaskLayout = ({
+  color,
   currentTask,
   currentList,
   changeProgress,
@@ -37,7 +39,10 @@ export const TaskLayout = ({
         <div className="flex w-full justify-between">
           <label className="flex w-3/4 items-center">
             <input
-              className="mr-2 h-4 w-4 rounded border-border-dark bg-hover text-primary focus:ring-primary    dark:border-night-border dark:bg-gray-700 focus:dark:ring-offset-night-bg"
+              className="mr-2 h-4 w-4 rounded border-border-dark bg-hover text-primary focus:ring-border-dark dark:border-night-border dark:bg-gray-700 focus:dark:ring-gray-700 focus:dark:ring-offset-night-nav"
+              style={{
+                color: `${color}`,
+              }}
               type="checkbox"
               checked={currentTask.status}
               onChange={handleTaskStatusChange}

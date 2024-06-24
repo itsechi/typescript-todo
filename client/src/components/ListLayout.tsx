@@ -18,6 +18,8 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
     currentList.name,
   );
   const [progress, setProgress] = useState(0);
+  const [color, setColor] = useState('#4f46e5');
+
   const changeProgress = useCallback(() => {
     const allTasks = currentList.tasks.length;
     const finishedTasks = currentList.tasks.filter(
@@ -31,6 +33,22 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
   useEffect(() => {
     changeProgress();
   }, [currentList.tasks, changeProgress]);
+
+  useEffect(() => {
+    const colors = [
+      '#4f46e5',
+      '#2563eb',
+      '#1BA39C',
+      '#009FD4',
+      '#7600A8',
+      '#8B008B',
+      '#4B6A88',
+      '#E73C4E',
+      '#f59e0b',
+    ];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setColor(randomColor);
+  }, []);
 
   return (
     <div className="relative mt-4 flex flex-col gap-2 rounded-md border bg-white dark:border-night-border dark:bg-night-nav">
@@ -65,15 +83,16 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
               currentTask={task}
               currentList={currentList}
               changeProgress={changeProgress}
+              color={color}
             />
           ))}
         </div>
       )}
-      <TaskForm currentList={currentList} />
+      <TaskForm currentList={currentList} color={color} />
       <div className="h-1 w-full bg-border dark:bg-night-border">
         <div
-          className={`h-1 bg-primary transition-all`}
-          style={{ width: `${progress}%` }}
+          className={`h-1 transition-all`}
+          style={{ width: `${progress}%`, backgroundColor: `${color}` }}
         ></div>
       </div>
     </div>
