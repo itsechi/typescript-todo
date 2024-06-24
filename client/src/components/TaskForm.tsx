@@ -71,7 +71,7 @@ export const TaskForm = ({
 
   const AddForm = showTaskInput ? (
     <form
-      className="flex flex-col gap-2 rounded-md p-4 pt-1 dark:border-night-border"
+      className="dark:border-night-gray-200 flex flex-col gap-2 rounded-md p-4 pt-1"
       onSubmit={handleSubmit(onSubmit)}
     >
       <InputController

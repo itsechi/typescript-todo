@@ -10,20 +10,18 @@ export default {
       colors: {
         // day-mode
         primary: colors.indigo[600],
-        border: colors.gray[200],
-        bg: colors.gray[50],
-        hover: colors.gray[100],
         'hover-primary': colors.indigo[700],
-        'gray-text': colors.gray[500],
-        'border-dark': colors.gray[300],
+        'gray-50': colors.gray[50],
+        'gray-100': colors.gray[100],
+        'gray-300': colors.gray[300],
 
         // night-mode
         'night-primary': '#6359ff',
-        'night-border': '#202022',
-        'night-nav': '#19191a',
-        'night-bg': '#0f0f10',
-        'night-hover': '#252527',
-        'night-gray-text': colors.gray[300],
+        'night-gray-200': '#202022',
+        'night-gray-300': colors.gray[300],
+        'night-gray-700': '#252527',
+        'night-gray-900': '#19191a',
+        'night-gray-950': '#0f0f10',
 
         // common
         black: '#121316',

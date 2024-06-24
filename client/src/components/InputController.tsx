@@ -26,7 +26,7 @@ export const InputController = ({
       }}
       render={({ field }) => (
         <input
-          className="w-full rounded-lg border-border-dark bg-hover px-2 py-1.5 text-sm focus:outline-none focus:ring-primary dark:border-night-border dark:bg-night-hover"
+          className="dark:bg-night-gray-700 dark:border-night-gray-200 w-full rounded-lg border-gray-200 bg-gray-100 px-2 py-1.5 text-sm focus:outline-none focus:ring-primary"
           onChange={(e) => {
             onChange(e);
             field.onChange(e);

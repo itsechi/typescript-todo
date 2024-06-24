@@ -13,7 +13,7 @@ const Navbar = () => {
   const { user } = useUserStore();
 
   return (
-    <header className="h-[60px] w-full border-b p-4 dark:border-night-border dark:bg-night-nav">
+    <header className="dark:border-night-gray-200 dark:bg-night-gray-900 h-[60px] w-full border-b p-4">
       <div className="mx-auto flex max-w-screen-2xl justify-between">
         <div className="flex items-center gap-1 text-black  dark:text-white">
           <CheckBadgeIcon className="h-[30px] w-[30px] text-primary dark:text-night-primary" />
@@ -62,9 +62,9 @@ const Dropdown = () => {
   };
 
   const DropdownItem = ({ children, href, onClick }: DropdownProps) => (
-    <li className="first:border-b hover:bg-hover dark:border-night-border dark:hover:bg-night-hover">
+    <li className="dark:border-night-gray-200 dark:hover:bg-night-gray-700 first:border-b hover:bg-gray-100">
       <a
-        className="flex gap-2 px-3 py-3 font-semibold dark:text-night-gray-text"
+        className="dark:text-night-gray-300 flex gap-2 px-3 py-3 font-semibold"
         href={href}
         onClick={onClick}
       >
@@ -74,7 +74,7 @@ const Dropdown = () => {
   );
 
   return (
-    <div className="top-100 absolute right-0 min-w-[150px] cursor-pointer rounded-md border bg-white shadow-sm dark:border-night-border dark:bg-night-nav">
+    <div className="top-100 dark:border-night-gray-200 dark:bg-night-gray-900 absolute right-0 min-w-[150px] cursor-pointer rounded-md border bg-white shadow-sm">
       <ul>
         <DropdownItem href="/">
           <UserIcon className="h-6 w-6" />
