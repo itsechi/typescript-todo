@@ -9,7 +9,7 @@ export default function ThemeSwitcher() {
   };
 
   return (
-    <button onClick={toggleDarkMode}>
+    <button onClick={toggleDarkMode} aria-label="Change theme">
       {colorTheme === 'light' ? (
         <SunIcon className="h-6 w-6" />
       ) : (

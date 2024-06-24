@@ -39,7 +39,7 @@ export const TaskLayout = ({
         <div className="flex w-full justify-between">
           <label className="flex w-3/4 items-center">
             <input
-              className="dark:border-night-gray-200 mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-gray-300 dark:bg-gray-700 focus:dark:ring-gray-700 focus:dark:ring-offset-night-gray-900"
+              className="dark:border-night-gray-200 focus:dark:ring-offset-night-gray-900 mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-gray-300 dark:bg-gray-700 focus:dark:ring-gray-700"
               style={{
                 color: `${color}`,
               }}
@@ -53,10 +53,16 @@ export const TaskLayout = ({
             </span>
           </label>
           <div className="flex">
-            <button onClick={() => setIsVisible(!isVisible)}>
+            <button
+              onClick={() => setIsVisible(!isVisible)}
+              aria-label="Edit task"
+            >
               <PencilSquareIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
-            <button onClick={() => handleTaskDelete(currentTask._id)}>
+            <button
+              onClick={() => handleTaskDelete(currentTask._id)}
+              aria-label="Delete task"
+            >
               <XMarkIcon className="h-6 w-6 opacity-0 group-hover:opacity-100" />
             </button>
           </div>

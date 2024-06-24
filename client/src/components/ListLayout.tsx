@@ -70,13 +70,14 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
           <button
             className="self-start pl-2"
             onClick={() => handleListDelete(currentList._id)}
+            aria-label="Delete list"
           >
             <TrashIcon className="h-[20px] w-[20px]" />
           </button>
         </div>
       )}
       {currentList.tasks.length > 0 && (
-        <div>
+        <>
           {currentList.tasks.map((task) => (
             <TaskLayout
               key={task._id}
@@ -86,7 +87,7 @@ export const ListLayout = ({ currentList }: ListLayoutProps) => {
               color={color}
             />
           ))}
-        </div>
+        </>
       )}
       <TaskForm currentList={currentList} color={color} />
       <div className="h-1 w-full bg-border dark:bg-night-border">
