@@ -1,30 +1,24 @@
-# React + TypeScript + Vite
+# Todo List Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Links
 
-Currently, two official plugins are available:
+[Live version](https://itsechi.github.io/typescript-todo/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Todo List Application
 
-## Expanding the ESLint configuration
+[![screenshot.jpg](https://i.postimg.cc/QCMDhW7c/screenshot.jpg)](https://postimg.cc/WFxC7zX4)A simple and efficient Todo List application to help you manage your tasks and stay organized. Built with TypeScript, React, Node.js, Express, MongoDB and Tailwind CSS.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Features
 
-- Configure the top-level `parserOptions` property like this:
+- Add new todo lists
+- Add new tasks to lists
+- Mark tasks as completed and view your progress for each list
+- Edit and delete lists and tasks
+- Log in through Google or use local storage
+- Theme switcher with default dark mode
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Future Features
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Tasks/lists sharing
+- Color picker for lists
+- Categories/tags/priority levels for lists or tasks
