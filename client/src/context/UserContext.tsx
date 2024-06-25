@@ -18,8 +18,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     const token = params.get('token');
     if (token) {
       localStorage.setItem('token', token);
-      window.location.href = 'http://localhost:5173/typescript-todo/'; // TESTING ONLY
-      // window.location.href = 'https://itsechi.github.io/typescript-todo/';
+      // window.location.href = 'http://localhost:5173/typescript-todo/'; // TESTING ONLY
+      window.location.href = 'https://itsechi.github.io/typescript-todo/';
     }
 
     const storedToken = localStorage.getItem('token');

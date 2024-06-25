@@ -30,6 +30,14 @@ export default {
       gridTemplateColumns: {
         responsive: 'repeat(auto-fit, minmax(100px, 300px))',
       },
+      animation: {
+        loader: 'spin 1s infinite linear',
+      },
+      keyframes: {
+        spin: {
+          to: { tranform: 'rotate(1turn)' },
+        },
+      },
     },
   },
   plugins: [forms],
