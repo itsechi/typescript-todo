@@ -37,9 +37,11 @@ export const TaskLayout = ({
         </div>
       ) : (
         <div className="flex w-full justify-between">
-          <label className="flex w-3/4 items-center">
+          <label
+            className={`flex w-3/4 items-center ${currentTask.status && 'italic text-gray-400 line-through'}`}
+          >
             <input
-              className="dark:border-night-gray-200 focus:dark:ring-offset-night-gray-900 mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-gray-300 dark:bg-gray-700 focus:dark:ring-gray-700"
+              className="mr-2 h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary focus:ring-gray-300 dark:border-night-gray-200 dark:bg-gray-700 focus:dark:ring-gray-700 focus:dark:ring-offset-night-gray-900"
               style={{
                 color: `${color}`,
               }}
